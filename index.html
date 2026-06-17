@@ -649,7 +649,7 @@
                                 <label class="block text-xs font-bold text-gray-600 uppercase mb-1">1. Subject (Who?)</label>
                                 <select id="sb-subj" onchange="updateSentence()" class="w-full bg-white border border-purple-200 rounded-xl p-2.5 text-sm font-bold text-gray-800 outline-none">
                                     <option value="nanu" data-kn="ನಾನು" data-en="I">ನಾನು (Naanu - I)</option>
-                                    <option value="ninu" data-kn="ನೀನು" data-en="You">ನೀನು (Neenu - You)</option>
+                                    <option value="ninu" data-kn="ನೀನು" data-en="You font kid">ನೀನು (Neenu - You)</option>
                                     <option value="avani" data-kn="ಅವನು" data-en="He">ಅವನು (Avanu - He)</option>
                                     <option value="avalu" data-kn="ಅವಳು" data-en="She">ಅವಳು (Avalu - She)</option>
                                     <option value="amma" data-kn="ಅಮ್ಮ" data-en="Mother">ಅಮ್ಮ (Amma - Mother)</option>
@@ -774,7 +774,7 @@
         </div>
     </div>
 
-    <!-- Audio Trouble / Settings Modal -->
+    <!-- Audio Settings Modal -->
     <div id="audio-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border-4 border-brand-yellow space-y-4 text-gray-800 relative z-50">
             <button onclick="toggleAudioModal()" class="absolute right-6 top-6 text-gray-400 hover:text-gray-600 text-2xl">
@@ -832,7 +832,7 @@
         </div>
     </div>
 
-    <!-- 100% Robust, Bulletproof Clean JS Implementation -->
+    <!-- 100% Robust, Bulletproof Clean JS Implementation With Storage Guard -->
     <script>
         /* ================= SAFE EXECUTION WRAPPER ================= */
         function safeExec(fn) {
@@ -846,13 +846,20 @@
         let lastSpokenMean = "Hello / Welcome";
         let toastTimeout = null;
 
-        // Magic Stars persistent state
-        let magicStars = parseInt(localStorage.getItem('nps_kannada_stars')) || 0;
+        // Magic Stars persistent state wrapped in bulletproof try/catch memory block
+        let magicStars = 0;
+        try {
+            magicStars = parseInt(localStorage.getItem('nps_kannada_stars')) || 0;
+        } catch(e) {
+            console.log("localStorage security blocked. Using active session storage.");
+        }
 
         function addStars(count) {
             safeExec(() => {
                 magicStars += count;
-                localStorage.setItem('nps_kannada_stars', magicStars);
+                try {
+                    localStorage.setItem('nps_kannada_stars', magicStars);
+                } catch(e) {}
                 
                 const hCount = document.getElementById('header-star-count');
                 const tCount = document.getElementById('trophy-star-count');
@@ -1253,7 +1260,7 @@
 
                 const choicesCont = document.getElementById('sq-choices');
                 if (choicesCont) {
-                    choicesCont.innerHTML = q.options.map(opt => `
+                    choicesCont.innerHTML = q.options.map((opt, oIdx) => `
                         <button onclick="handleSimpleAnswer('${opt.kn}', '${q.correctKn}', '${q.correctMean}', this)" 
                                 class="sq-opt-btn bg-yellow-50 hover:bg-yellow-100 border-4 border-yellow-200 font-bold p-6 rounded-3xl shadow-lg flex flex-col items-center justify-center gap-2 transform hover:scale-105 transition btn-push">
                             <span class="text-6xl">${opt.img || '✨'}</span>
@@ -1393,8 +1400,8 @@
 
                 const pairs = vocabularyData.sort(() => 0.5 - Math.random()).slice(0, 5);
                 
-                matchLeftItems = pairs.map(p => ({ id: p.kn, text: p.kn, en: p.en, matchId: p.mean })).sort(() => 0.5 - Math.random());
-                matchRightItems = pairs.map(p => ({ id: p.mean, text: `${p.img} ${p.mean}`, matchId: p.kn })).sort(() => 0.5 - Math.random());
+                matchLeftItems = pairs.map((p, pIdx) => ({ id: 'mlid_' + pIdx, kn: p.kn, text: p.kn, en: p.en, matchId: 'mrid_' + pIdx })).sort(() => 0.5 - Math.random());
+                matchRightItems = pairs.map((p, pIdx) => ({ id: 'mrid_' + pIdx, mean: p.mean, text: `${p.img} ${p.mean}`, matchId: 'mlid_' + pIdx })).sort(() => 0.5 - Math.random());
 
                 renderMatchGame();
                 clearMatchCanvas();
@@ -1408,14 +1415,14 @@
                 if (!leftCont || !rightCont) return;
 
                 leftCont.innerHTML = matchLeftItems.map((item, idx) => `
-                    <button id="ml-${idx}" onclick="onSelectMatchLeft(${idx}, '${item.en}')" 
+                    <button id="mbtn_left_${idx}" onclick="onSelectMatchLeft(${idx}, '${item.en}')" 
                             class="match-card bg-orange-50 border-2 border-orange-200 font-kannada font-bold text-xl py-3.5 px-6 rounded-2xl shadow text-gray-800 transition text-center btn-push">
                         ${item.text}
                     </button>
                 `).join('');
 
                 rightCont.innerHTML = matchRightItems.map((item, idx) => `
-                    <button id="mr-${idx}" onclick="onSelectMatchRight(${idx})" 
+                    <button id="mbtn_right_${idx}" onclick="onSelectMatchRight(${idx})" 
                             class="match-card bg-blue-50 border-2 border-blue-200 font-bold text-base py-3.5 px-6 rounded-2xl shadow text-gray-800 transition text-center btn-push">
                         ${item.text}
                     </button>
@@ -1430,9 +1437,9 @@
                 
                 matchSelectedLeft = item;
                 document.querySelectorAll('#match-left .match-card').forEach(b => b.classList.remove('ring-4', 'ring-orange-400', 'bg-orange-200'));
-                const btn = document.getElementById(`ml-${leftIndex}`);
+                const btn = document.getElementById(`mbtn_left_${leftIndex}`);
                 if (btn) btn.classList.add('ring-4', 'ring-orange-400', 'bg-orange-200');
-                speakKannada(item.id, leftEn, "Find matching meaning!");
+                speakKannada(item.kn, leftEn, "Find matching meaning!");
             });
         }
 
@@ -1445,10 +1452,9 @@
                     matchMatchedPairs.add(matchSelectedLeft.id);
                     matchMatchedPairs.add(item.id);
 
-                    // match right index
                     const leftIndex = matchLeftItems.findIndex(l => l.id === matchSelectedLeft.id);
-                    const lBtn = document.getElementById(`ml-${leftIndex}`);
-                    const rBtn = document.getElementById(`mr-${rightIndex}`);
+                    const lBtn = document.getElementById(`mbtn_left_${leftIndex}`);
+                    const rBtn = document.getElementById(`mbtn_right_${rightIndex}`);
                     
                     if(lBtn) lBtn.className = "match-card bg-green-200 border-2 border-green-500 font-kannada font-bold text-xl py-3.5 px-6 rounded-2xl shadow text-green-900 text-center opacity-80";
                     if(rBtn) rBtn.className = "match-card bg-green-200 border-2 border-green-500 font-bold text-base py-3.5 px-6 rounded-2xl shadow text-green-900 text-center opacity-80";
@@ -1466,7 +1472,7 @@
                 } else {
                     testGameSound('buzz');
                     speakKannada("ಅಯ್ಯೋ ತಪ್ಪು!", "Ayyo tappu!", "Try another pair!");
-                    const rBtn = document.getElementById(`mr-${rightIndex}`);
+                    const rBtn = document.getElementById(`mbtn_right_${rightIndex}`);
                     if(rBtn) {
                         rBtn.classList.add('bg-red-200');
                         setTimeout(() => rBtn.classList.remove('bg-red-200'), 800);
@@ -1586,5 +1592,6 @@
             });
         };
     </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0d1c6918f5a2ffb',t:'MTc4MTY5NjM4Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
