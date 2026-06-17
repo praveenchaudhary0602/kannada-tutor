@@ -69,10 +69,11 @@
         }
 
         .tab-btn.active {
-            background-color: #FF7D00;
-            color: white;
-            box-shadow: 0 4px 0 #D06000, 0 8px 15px rgba(255, 125, 0, 0.3);
+            background-color: #FF7D00 !important;
+            color: white !important;
+            box-shadow: 0 4px 0 #D06000, 0 8px 15px rgba(255, 125, 0, 0.3) !important;
             transform: translateY(-2px);
+            border-color: #FF7D00 !important;
         }
 
         .kid-card {
@@ -255,7 +256,6 @@
                 <!-- Simulated WhatsApp / Twitter Preview Card -->
                 <div class="bg-gray-50 border-2 border-gray-200 rounded-2xl overflow-hidden shadow-md block hover:border-blue-400 transition">
                     <div class="h-44 sm:h-52 bg-gradient-to-r from-brand-orange via-brand-yellow to-brand-green relative flex items-center justify-center overflow-hidden">
-                        <!-- We embed the actual high quality og_preview image we generated -->
                         <img src="og_preview.jpg" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover">
                         <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-center justify-center p-4 text-center text-white">
                             <span class="text-5xl mb-1 animate-bounce">🦚</span>
@@ -347,35 +347,35 @@
     </div>
 
     <!-- Main Navigation & Application Panels -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 flex flex-col gap-6">
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 flex flex-col gap-6 z-10">
 
-        <!-- Navigation Tabs -->
+        <!-- Navigation Tabs (With robust data-tab attributes) -->
         <nav class="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-            <button onclick="switchTab('varnamale')" class="tab-btn active font-kannada font-bold text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-brand-orange text-brand-orange hover:bg-orange-50">
+            <button onclick="switchTab('varnamale')" data-tab="varnamale" class="tab-btn font-kannada font-bold text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-brand-orange text-brand-orange hover:bg-orange-50 btn-push">
                 <span class="text-lg">📖</span>
                 <span>ವರ್ಣಮಾಲೆ (Alphabets)</span>
             </button>
-            <button onclick="switchTab('numbers')" class="tab-btn font-kannada font-bold text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-brand-orange text-brand-orange hover:bg-orange-50">
+            <button onclick="switchTab('numbers')" data-tab="numbers" class="tab-btn font-kannada font-bold text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-brand-orange text-brand-orange hover:bg-orange-50 btn-push">
                 <span class="text-lg">🔢</span>
                 <span>ಸಂಖ್ಯೆಗಳು (Numbers 1-20)</span>
             </button>
-            <button onclick="switchTab('words')" class="tab-btn font-kannada font-bold text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-brand-orange text-brand-orange hover:bg-orange-50">
+            <button onclick="switchTab('words')" data-tab="words" class="tab-btn font-kannada font-bold text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-brand-orange text-brand-orange hover:bg-orange-50 btn-push">
                 <span class="text-lg">🎴</span>
                 <span>ಪದಗಳು (Vocabulary)</span>
             </button>
-            <button onclick="switchTab('games')" class="tab-btn font-kannada font-bold text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-brand-orange text-brand-orange hover:bg-orange-50">
+            <button onclick="switchTab('games')" data-tab="games" class="tab-btn font-kannada font-bold text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-brand-orange text-brand-orange hover:bg-orange-50 btn-push">
                 <span class="text-lg animate-bounce">🎮</span>
                 <span>ಆಟಗಳು & Star Quizzes</span>
             </button>
-            <button onclick="switchTab('rhymes')" class="tab-btn font-kannada font-bold text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-brand-orange text-brand-orange hover:bg-orange-50">
+            <button onclick="switchTab('rhymes')" data-tab="rhymes" class="tab-btn font-kannada font-bold text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-brand-orange text-brand-orange hover:bg-orange-50 btn-push">
                 <span class="text-lg">🎶</span>
                 <span>ಪದ್ಯಗಳು (NPS Rhymes)</span>
             </button>
-            <button onclick="switchTab('buddy')" class="tab-btn font-kannada font-bold text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-brand-orange text-brand-orange hover:bg-orange-50">
+            <button onclick="switchTab('buddy')" data-tab="buddy" class="tab-btn font-kannada font-bold text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-brand-orange text-brand-orange hover:bg-orange-50 btn-push">
                 <span class="text-lg">🤖</span>
                 <span>Ask Buddy & Builder</span>
             </button>
-            <button onclick="switchTab('trophy')" class="tab-btn bg-yellow-100 font-kannada font-black text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-amber-400 text-amber-800 hover:bg-yellow-200 shadow-md">
+            <button onclick="switchTab('trophy')" data-tab="trophy" class="tab-btn bg-yellow-100 font-kannada font-black text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-amber-400 text-amber-800 hover:bg-yellow-200 shadow-md btn-push">
                 <span class="text-lg">🏆</span>
                 <span>My Trophy Room</span>
             </button>
@@ -383,7 +383,7 @@
 
         <!-- Architect Cheer Box -->
         <div class="bg-white rounded-3xl p-4 sm:p-5 shadow-md flex flex-wrap items-center justify-between gap-4 border-2 border-brand-yellow relative">
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-4 z-10">
                 <div class="text-4xl bg-yellow-100 p-3 rounded-2xl animate-bounce-slow flex-shrink-0">
                     👑
                 </div>
@@ -397,7 +397,7 @@
                     </p>
                 </div>
             </div>
-            <div class="flex-shrink-0 flex items-center gap-2">
+            <div class="flex-shrink-0 flex items-center gap-2 z-10">
                 <button onclick="toggleShareModal()" class="text-xs bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 text-white font-black px-4 py-2.5 rounded-2xl shadow-md flex items-center btn-push">
                     <i class="fas fa-share-alt mr-1.5 text-yellow-300"></i> Spread The App
                 </button>
@@ -460,12 +460,12 @@
                     <p class="text-sm text-gray-600">Click any picture card to flip it over and learn its secret spoken Kannada name!</p>
                 </div>
                 <div class="flex flex-wrap gap-1.5 sm:gap-2" id="word-filters">
-                    <button onclick="filterWords('All')" class="word-filter-btn active bg-brand-purple text-white px-3 py-1.5 rounded-xl font-bold text-xs shadow">All</button>
-                    <button onclick="filterWords('Fruits')" class="word-filter-btn bg-white text-gray-700 hover:bg-purple-50 px-3 py-1.5 rounded-xl font-bold text-xs border border-purple-200 shadow">🍎 Fruits</button>
-                    <button onclick="filterWords('Animals')" class="word-filter-btn bg-white text-gray-700 hover:bg-purple-50 px-3 py-1.5 rounded-xl font-bold text-xs border border-purple-200 shadow">🐶 Animals</button>
-                    <button onclick="filterWords('Colors')" class="word-filter-btn bg-white text-gray-700 hover:bg-purple-50 px-3 py-1.5 rounded-xl font-bold text-xs border border-purple-200 shadow">🎨 Colors</button>
-                    <button onclick="filterWords('Family')" class="word-filter-btn bg-white text-gray-700 hover:bg-purple-50 px-3 py-1.5 rounded-xl font-bold text-xs border border-purple-200 shadow">👪 Family</button>
-                    <button onclick="filterWords('Phrases')" class="word-filter-btn bg-white text-gray-700 hover:bg-purple-50 px-3 py-1.5 rounded-xl font-bold text-xs border border-purple-200 shadow">👋 Phrases</button>
+                    <button onclick="filterWords('All')" data-cat="All" class="word-filter-btn active bg-brand-purple text-white px-3 py-1.5 rounded-xl font-bold text-xs shadow btn-push">All</button>
+                    <button onclick="filterWords('Fruits')" data-cat="Fruits" class="word-filter-btn bg-white text-gray-700 hover:bg-purple-50 px-3 py-1.5 rounded-xl font-bold text-xs border border-purple-200 shadow btn-push">🍎 Fruits</button>
+                    <button onclick="filterWords('Animals')" data-cat="Animals" class="word-filter-btn bg-white text-gray-700 hover:bg-purple-50 px-3 py-1.5 rounded-xl font-bold text-xs border border-purple-200 shadow btn-push">🐶 Animals</button>
+                    <button onclick="filterWords('Colors')" data-cat="Colors" class="word-filter-btn bg-white text-gray-700 hover:bg-purple-50 px-3 py-1.5 rounded-xl font-bold text-xs border border-purple-200 shadow btn-push">🎨 Colors</button>
+                    <button onclick="filterWords('Family')" data-cat="Family" class="word-filter-btn bg-white text-gray-700 hover:bg-purple-50 px-3 py-1.5 rounded-xl font-bold text-xs border border-purple-200 shadow btn-push">👪 Family</button>
+                    <button onclick="filterWords('Phrases')" data-cat="Phrases" class="word-filter-btn bg-white text-gray-700 hover:bg-purple-50 px-3 py-1.5 rounded-xl font-bold text-xs border border-purple-200 shadow btn-push">👋 Phrases</button>
                 </div>
             </div>
 
@@ -480,13 +480,13 @@
                     <p class="text-sm text-gray-600">Enjoy simple picture quizzes, balloon pop games, and pair matches to win endless Golden Stars!</p>
                 </div>
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="switchGameMode('simple_quiz')" id="btn-mode-simple" class="bg-brand-orange text-white font-bold px-4 py-2 rounded-xl text-sm shadow btn-push flex items-center gap-1.5">
+                    <button onclick="switchGameMode('simple_quiz')" data-mode="simple_quiz" id="btn-mode-simple" class="game-mode-btn bg-brand-orange text-white font-bold px-4 py-2 rounded-xl text-sm shadow btn-push flex items-center gap-1.5">
                         <span class="text-lg">👶</span> <span>Simple Picture Quiz</span>
                     </button>
-                    <button onclick="switchGameMode('balloon_pop')" id="btn-mode-balloon" class="bg-white text-brand-orange border border-brand-orange font-bold px-4 py-2 rounded-xl text-sm shadow hover:bg-orange-50 btn-push flex items-center gap-1.5">
+                    <button onclick="switchGameMode('balloon_pop')" data-mode="balloon_pop" id="btn-mode-balloon" class="game-mode-btn bg-white text-brand-orange border border-brand-orange font-bold px-4 py-2 rounded-xl text-sm shadow hover:bg-orange-50 btn-push flex items-center gap-1.5">
                         <span class="text-lg">🎈</span> <span>Word Balloon Pop</span>
                     </button>
-                    <button onclick="switchGameMode('match')" id="btn-mode-match" class="bg-white text-brand-orange border border-brand-orange font-bold px-4 py-2 rounded-xl text-sm shadow hover:bg-orange-50 btn-push flex items-center gap-1.5">
+                    <button onclick="switchGameMode('match')" data-mode="match" id="btn-mode-match" class="game-mode-btn bg-white text-brand-orange border border-brand-orange font-bold px-4 py-2 rounded-xl text-sm shadow hover:bg-orange-50 btn-push flex items-center gap-1.5">
                         <span class="text-lg">🔗</span> <span>Match the Pairs</span>
                     </button>
                 </div>
@@ -649,7 +649,7 @@
                                 <label class="block text-xs font-bold text-gray-600 uppercase mb-1">1. Subject (Who?)</label>
                                 <select id="sb-subj" onchange="updateSentence()" class="w-full bg-white border border-purple-200 rounded-xl p-2.5 text-sm font-bold text-gray-800 outline-none">
                                     <option value="nanu" data-kn="ನಾನು" data-en="I">ನಾನು (Naanu - I)</option>
-                                    <option value="ninu" data-kn="ನೀನು" data-en="You font kid">ನೀನು (Neenu - You)</option>
+                                    <option value="ninu" data-kn="ನೀನು" data-en="You">ನೀನು (Neenu - You)</option>
                                     <option value="avani" data-kn="ಅವನು" data-en="He">ಅವನು (Avanu - He)</option>
                                     <option value="avalu" data-kn="ಅವಳು" data-en="She">ಅವಳು (Avalu - She)</option>
                                     <option value="amma" data-kn="ಅಮ್ಮ" data-en="Mother">ಅಮ್ಮ (Amma - Mother)</option>
@@ -774,7 +774,7 @@
         </div>
     </div>
 
-    <!-- Audio Settings Modal -->
+    <!-- Audio Trouble / Settings Modal -->
     <div id="audio-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border-4 border-brand-yellow space-y-4 text-gray-800 relative z-50">
             <button onclick="toggleAudioModal()" class="absolute right-6 top-6 text-gray-400 hover:text-gray-600 text-2xl">
@@ -817,23 +817,28 @@
     <div class="fixed bottom-0 left-0 right-0 bg-gray-900 border-t-2 border-amber-400 text-white py-2 px-4 text-center z-50 shadow-2xl flex flex-wrap items-center justify-between gap-2 text-xs">
         <div class="flex items-center space-x-2 font-bold text-amber-300">
             <span class="text-base">👑</span>
-            <span class="tracking-widest uppercase">By Praveen Chaudhary</span>
+            <span class="tracking-widest uppercase font-black">By Praveen Chaudhary</span>
             <span class="text-gray-500 hidden md:inline">|</span>
             <span class="text-gray-300 font-normal hidden md:inline">For NPS ITPL Grade 2</span>
         </div>
         
         <div class="flex items-center space-x-3 text-[11px]">
-            <button onclick="toggleShareModal()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 text-white font-black px-3 py-1 rounded-lg uppercase tracking-wider shadow btn-push flex items-center gap-1">
-                <i class="fas fa-share-alt text-yellow-300"></i> <span>Share</span>
+            <button onclick="toggleShareModal()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 text-white font-black px-3 py-1.5 rounded-lg uppercase tracking-wider shadow btn-push flex items-center gap-1.5">
+                <i class="fas fa-share-alt text-yellow-300"></i> <span>Share App</span>
             </button>
-            <button onclick="toggleCopyrightModal()" class="bg-amber-400 hover:bg-amber-300 text-gray-900 font-black px-3 py-1 rounded-lg uppercase tracking-wider shadow btn-push">
-                ⚖️ Copyright Info
+            <button onclick="toggleCopyrightModal()" class="bg-amber-400 hover:bg-amber-300 text-gray-900 font-black px-3 py-1.5 rounded-lg uppercase tracking-wider shadow btn-push">
+                ⚖️ Legal & Copyright Info
             </button>
         </div>
     </div>
 
-    <!-- Actual Fully Populated Clean JS Implementation -->
+    <!-- 100% Robust, Bulletproof Clean JS Implementation -->
     <script>
+        /* ================= SAFE EXECUTION WRAPPER ================= */
+        function safeExec(fn) {
+            try { fn(); } catch(e) { console.error("App execution info:", e); }
+        }
+
         /* ================= STATE, STARS & REWARDS LOGIC ================= */
         let currentTab = 'varnamale';
         let lastSpokenKn = "ನಮಸ್ಕಾರ";
@@ -845,15 +850,17 @@
         let magicStars = parseInt(localStorage.getItem('nps_kannada_stars')) || 0;
 
         function addStars(count) {
-            magicStars += count;
-            localStorage.setItem('nps_kannada_stars', magicStars);
-            
-            const hCount = document.getElementById('header-star-count');
-            const tCount = document.getElementById('trophy-star-count');
-            if (hCount) hCount.innerText = magicStars;
-            if (tCount) tCount.innerText = `${magicStars} ⭐`;
+            safeExec(() => {
+                magicStars += count;
+                localStorage.setItem('nps_kannada_stars', magicStars);
+                
+                const hCount = document.getElementById('header-star-count');
+                const tCount = document.getElementById('trophy-star-count');
+                if (hCount) hCount.innerText = magicStars;
+                if (tCount) tCount.innerText = `${magicStars} ⭐`;
 
-            renderTrophies();
+                renderTrophies();
+            });
         }
 
         // Trophies Data
@@ -869,29 +876,31 @@
         ];
 
         function renderTrophies() {
-            const grid = document.getElementById('trophies-grid');
-            if (!grid) return;
+            safeExec(() => {
+                const grid = document.getElementById('trophies-grid');
+                if (!grid) return;
 
-            grid.innerHTML = trophiesList.map(t => {
-                const isUnlocked = magicStars >= t.req;
-                return `
-                    <div class="bg-white rounded-3xl p-6 border-4 ${isUnlocked ? 'border-amber-400 shadow-xl transform hover:-translate-y-2' : 'border-gray-200 opacity-60'} transition flex flex-col items-center text-center justify-between min-h-[220px] relative">
-                        <span class="absolute top-4 right-4 text-xs font-black px-3 py-1 rounded-full ${isUnlocked ? 'bg-green-100 text-brand-green' : 'bg-gray-100 text-gray-500'}">
-                            ${isUnlocked ? '🏆 UNLOCKED' : '🔒 Requires ' + t.req + ' ⭐'}
-                        </span>
+                grid.innerHTML = trophiesList.map(t => {
+                    const isUnlocked = magicStars >= t.req;
+                    return `
+                        <div class="bg-white rounded-3xl p-6 border-4 ${isUnlocked ? 'border-amber-400 shadow-xl transform hover:-translate-y-2' : 'border-gray-200 opacity-60'} transition flex flex-col items-center text-center justify-between min-h-[220px] relative">
+                            <span class="absolute top-4 right-4 text-xs font-black px-3 py-1 rounded-full ${isUnlocked ? 'bg-green-100 text-brand-green' : 'bg-gray-100 text-gray-500'}">
+                                ${isUnlocked ? '🏆 UNLOCKED' : '🔒 Requires ' + t.req + ' ⭐'}
+                            </span>
 
-                        <div class="text-7xl my-3 ${isUnlocked ? 'animate-bounce' : 'grayscale filter blur-[1px]'}">
-                            ${isUnlocked ? t.icon : '🎁'}
+                            <div class="text-7xl my-3 ${isUnlocked ? 'animate-bounce' : 'grayscale filter blur-[1px]'}">
+                                ${isUnlocked ? t.icon : '🎁'}
+                            </div>
+
+                            <div>
+                                <h4 class="text-2xl font-black font-kannada ${isUnlocked ? 'text-brand-orange' : 'text-gray-400'}">${t.titleKn}</h4>
+                                <h5 class="text-sm font-bold text-gray-800">${t.titleEn}</h5>
+                                <p class="text-xs text-gray-500 mt-2">${t.desc}</p>
+                            </div>
                         </div>
-
-                        <div>
-                            <h4 class="text-2xl font-black font-kannada ${isUnlocked ? 'text-brand-orange' : 'text-gray-400'}">${t.titleKn}</h4>
-                            <h5 class="text-sm font-bold text-gray-800">${t.titleEn}</h5>
-                            <p class="text-xs text-gray-500 mt-2">${t.desc}</p>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+                    `;
+                }).join('');
+            });
         }
 
         // Compliments Suite
@@ -904,34 +913,42 @@
         ];
 
         function triggerVictoryCheer(starsEarned) {
-            addStars(starsEarned);
-            testGameSound('win');
+            safeExec(() => {
+                addStars(starsEarned);
+                testGameSound('win');
 
-            const randComp = complimentsBank[Math.floor(Math.random() * complimentsBank.length)];
-            const toast = document.getElementById('compliment-toast');
-            document.getElementById('comp-emoji').innerText = randComp.emoji;
-            document.getElementById('comp-title').innerText = randComp.kn;
-            document.getElementById('comp-msg').innerText = randComp.en;
-            document.getElementById('comp-stars').innerText = `+${starsEarned} ⭐`;
+                const randComp = complimentsBank[Math.floor(Math.random() * complimentsBank.length)];
+                const toast = document.getElementById('compliment-toast');
+                if (toast) {
+                    document.getElementById('comp-emoji').innerText = randComp.emoji;
+                    document.getElementById('comp-title').innerText = randComp.kn;
+                    document.getElementById('comp-msg').innerText = randComp.en;
+                    document.getElementById('comp-stars').innerText = `+${starsEarned} ⭐`;
 
-            toast.classList.remove('opacity-0', 'scale-75');
-            toast.classList.add('opacity-100', 'scale-100');
+                    toast.classList.remove('opacity-0', 'scale-75');
+                    toast.classList.add('opacity-100', 'scale-100');
 
-            speakKannada(randComp.kn, randComp.en, `Won +${starsEarned} Stars!`);
+                    setTimeout(() => {
+                        toast.classList.remove('opacity-100', 'scale-100');
+                        toast.classList.add('opacity-0', 'scale-75');
+                    }, 3000);
+                }
 
-            confetti({ particleCount: 70, spread: 80, origin: { y: 0.6 } });
-
-            setTimeout(() => {
-                toast.classList.remove('opacity-100', 'scale-100');
-                toast.classList.add('opacity-0', 'scale-75');
-            }, 3000);
+                speakKannada(randComp.kn, randComp.en, `Won +${starsEarned} Stars!`);
+                if (window.confetti) {
+                    confetti({ particleCount: 70, spread: 80, origin: { y: 0.6 } });
+                }
+            });
         }
 
         // Setup Web Audio Synthesizer
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let audioCtx = null;
 
         function playTone(freq, type, duration) {
-            try {
+            safeExec(() => {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
                 if (audioCtx.state === 'suspended') audioCtx.resume();
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
@@ -946,16 +963,18 @@
                 
                 osc.start();
                 osc.stop(audioCtx.currentTime + duration);
-            } catch(e) {}
+            });
         }
 
         function testGameSound(event) {
-            if (event === 'win') {
-                playTone(523.25, 'triangle', 0.15);
-                setTimeout(() => playTone(659.25, 'triangle', 0.25), 120);
-            } else if (event === 'buzz') {
-                playTone(200, 'sawtooth', 0.3);
-            }
+            safeExec(() => {
+                if (event === 'win') {
+                    playTone(523.25, 'triangle', 0.15);
+                    setTimeout(() => playTone(659.25, 'triangle', 0.25), 120);
+                } else if (event === 'buzz') {
+                    playTone(200, 'sawtooth', 0.3);
+                }
+            });
         }
 
         /* ================= ALL COMPREHENSIVE DATA ================= */
@@ -1020,58 +1039,58 @@
             { num: 3, knNum: "೩", knWord: "ಮೂರು", enWord: "Mooru", mean: "Three" },
             { num: 4, knNum: "೪", knWord: "ನಾಲ್ಕು", enWord: "Naalku", mean: "Four" },
             { num: 5, knNum: "೫", knWord: "ಐದು", enWord: "Aidu", mean: "Five" },
-            { num: 6, knNum: "೬", font: "ಆರು", enWord: "Aaru", mean: "Six" },
+            { num: 6, knNum: "೬", enWord: "Aaru", knWord: "ಆರು", mean: "Six" },
             { num: 7, knNum: "೭", knWord: "ಏಳು", enWord: "Ealu", mean: "Seven" },
             { num: 8, knNum: "೮", knWord: "ಎಂಟು", enWord: "Entu", mean: "Eight" },
             { num: 9, knNum: "೯", knWord: "ಒಂಬತ್ತು", enWord: "Ombattu", mean: "Nine" },
             { num: 10, knNum: "೧೦", knWord: "ಹತ್ತು", enWord: "Hattu", mean: "Ten" },
-            { num: 11, knNum: "೧೧", font: "ಹನ್ನೊಂದು", enWord: "Hannondu", mean: "Eleven" },
-            { num: 12, knNum: "೧೨", font: "ಹನ್ನೆರಡು", enWord: "Hanneradu", mean: "Twelve" },
+            { num: 11, knNum: "೧೧", enWord: "Hannondu", knWord: "ಹನ್ನೊಂದು", mean: "Eleven" },
+            { num: 12, knNum: "೧೨", enWord: "Hanneradu", knWord: "ಹನ್ನೆರಡು", mean: "Twelve" },
             { num: 13, knNum: "೧೩", knWord: "ಹದಿಮೂರು", enWord: "Hadimooru", mean: "Thirteen" },
             { num: 14, knNum: "೧೪", knWord: "ಹದಿನಾಲ್ಕು", enWord: "Hadinaalku", mean: "Fourteen" },
             { num: 15, knNum: "೧೫", knWord: "ಹದಿನೈದು", enWord: "Hadinaidu", mean: "Fifteen" },
             { num: 16, knNum: "೧೬", knWord: "ಹದಿನಾರು", enWord: "Hadinaaru", mean: "Sixteen" },
-            { num: 17, knNum: "೧೭", font: "ಹದಿನೇಳು", enWord: "Hadinealu", mean: "Seventeen" },
+            { num: 17, knNum: "೧೭", enWord: "Hadinealu", knWord: "ಹದಿನೇಳು", mean: "Seventeen" },
             { num: 18, knNum: "೧೮", knWord: "ಹದಿನೆಂಟು", enWord: "Hadinentu", mean: "Eighteen" },
-            { num: 19, font: "೧೯", knWord: "ಹತ್ತೊಂಬತ್ತು", enWord: "Hattombattu", mean: "Nineteen" },
+            { num: 19, knNum: "೧೯", knWord: "ಹತ್ತೊಂಬತ್ತು", enWord: "Hattombattu", mean: "Nineteen" },
             { num: 20, knNum: "೨೦", knWord: "ಇಪ್ಪತ್ತು", enWord: "Ippattu", mean: "Twenty" }
         ];
 
         const vocabularyData = [
             { cat: "Fruits", kn: "ಸೇಬು", en: "Saebu", mean: "Apple", img: "🍎" },
-            { cat: "Fruits", font: "ಬಾಳೆಹಣ್ಣು", en: "Balehannu", mean: "Banana", img: "🍌" },
-            { cat: "Fruits", font: "ಮಾವಿನಹಣ್ಣು", en: "Mavinahannu", mean: "Mango", img: "🥭" },
-            { cat: "Fruits", font: "ಕಿತ್ತಳೆ", en: "Kittale", mean: "Orange", img: "🍊" },
+            { cat: "Fruits", kn: "ಬಾಳೆಹಣ್ಣು", en: "Balehannu", mean: "Banana", img: "🍌" },
+            { cat: "Fruits", kn: "ಮಾವಿನಹಣ್ಣು", en: "Mavinahannu", mean: "Mango", img: "🥭" },
+            { cat: "Fruits", kn: "ಕಿತ್ತಳೆ", en: "Kittale", mean: "Orange", img: "🍊" },
             { cat: "Fruits", kn: "ದ್ರಾಕ್ಷಿ", en: "Drakshi", mean: "Grapes", img: "🍇" },
-            { cat: "Fruits", font: "ಕಲ್ಲಂಗಡಿ", font: "Kallangadi", mean: "Watermelon", img: "🍉" },
+            { cat: "Fruits", kn: "ಕಲ್ಲಂಗಡಿ", en: "Kallangadi", mean: "Watermelon", img: "🍉" },
             
-            { cat: "Animals", font: "ನಾಯಿ", en: "Nayi", mean: "Dog", img: "🐶" },
-            { cat: "Animals", font: "ಬೆಕ್ಕು", font: "Bekku", mean: "Cat", img: "🐱" },
-            { cat: "Animals", font: "ಹಸು", en: "Hasu", font: "Cow", img: "🐄" },
-            { cat: "Animals", kn: "ಆನೆ", font: "Aane", font: "Elephant", img: "🐘" },
-            { cat: "Animals", font: "ಸಿಂಹ", font: "Simha", mean: "Lion", img: "🦁" },
-            { cat: "Animals", kn: "ಹುಲಿ", en: "Huli", font: "Tiger", img: "🐯" },
+            { cat: "Animals", kn: "ನಾಯಿ", en: "Nayi", mean: "Dog", img: "🐶" },
+            { cat: "Animals", kn: "ಬೆಕ್ಕು", en: "Bekku", mean: "Cat", img: "🐱" },
+            { cat: "Animals", kn: "ಹಸು", en: "Hasu", mean: "Cow", img: "🐄" },
+            { cat: "Animals", kn: "ಆನೆ", en: "Aane", mean: "Elephant", img: "🐘" },
+            { cat: "Animals", kn: "ಸಿಂಹ", en: "Simha", mean: "Lion", img: "🦁" },
+            { cat: "Animals", kn: "ಹುಲಿ", en: "Huli", mean: "Tiger", img: "🐯" },
 
-            { cat: "Colors", font: "ಕೆಂಪು", en: "Kempu", mean: "Red", img: "🔴" },
-            { cat: "Colors", font: "ಹಸಿರು", font: "Hasiru", mean: "Green", img: "🟢" },
-            { cat: "Colors", kn: "ಹಳದಿ", font: "Haladi", mean: "Yellow", font: "🟡" },
-            { cat: "Colors", font: "ನೀಲಿ", font: "Neeli", font: "Blue", font: "🔵" },
-            { cat: "Colors", font: "ಕಪ್ಪು", en: "Kappu", font: "Black", font: "⚫" },
-            { cat: "Colors", font: "ಬಿಳಿ", en: "Bili", mean: "White", font: "⚪" },
+            { cat: "Colors", kn: "ಕೆಂಪು", en: "Kempu", mean: "Red", img: "🔴" },
+            { cat: "Colors", kn: "ಹಸಿರು", en: "Hasiru", mean: "Green", img: "🟢" },
+            { cat: "Colors", kn: "ಹಳದಿ", en: "Haladi", mean: "Yellow", img: "🟡" },
+            { cat: "Colors", kn: "ನೀಲಿ", en: "Neeli", mean: "Blue", img: "🔵" },
+            { cat: "Colors", kn: "ಕಪ್ಪು", en: "Kappu", mean: "Black", img: "⚫" },
+            { cat: "Colors", kn: "ಬಿಳಿ", en: "Bili", mean: "White", img: "⚪" },
 
-            { cat: "Family", font: "ಅಮ್ಮ", font: "Amma", mean: "Mother", font: "👩‍👧" },
-            { cat: "Family", font: "ಅಪ್ಪ", en: "Appa", mean: "Father", font: "👨‍👧" },
-            { cat: "Family", font: "ಅಣ್ಣ", font: "Anna", font: "Elder Brother", font: "👦" },
-            { cat: "Family", font: "ತಮ್ಮ", en: "Tamma", mean: "Younger Brother", img: "👶" },
-            { cat: "Family", font: "ಅಕ್ಕ", font: "Akka", font: "Elder Sister", font: "👧" },
-            { cat: "Family", font: "ತಂಗಿ", font: "Tangi", font: "Younger Sister", font: "👶" },
+            { cat: "Family", kn: "ಅಮ್ಮ", en: "Amma", mean: "Mother", img: "👩‍👧" },
+            { cat: "Family", kn: "ಅಪ್ಪ", en: "Appa", mean: "Father", img: "👨‍👧" },
+            { cat: "Family", kn: "ಅಣ್ಣ", en: "Anna", mean: "Elder Brother", img: "👦" },
+            { cat: "Family", kn: "ತಮ್ಮ", en: "Tamma", mean: "Younger Brother", img: "👶" },
+            { cat: "Family", kn: "ಅಕ್ಕ", en: "Akka", mean: "Elder Sister", img: "👧" },
+            { cat: "Family", kn: "ತಂಗಿ", en: "Tangi", mean: "Younger Sister", img: "👶" },
 
-            { cat: "Phrases", font: "ನಮಸ್ಕಾರ", en: "Namaskara", font: "Hello / Welcome", img: "🙏" },
-            { cat: "Phrases", font: "ಶುಭೋದಯ", en: "Shubhodaya", font: "Good Morning", font: "🌅" },
-            { cat: "Phrases", font: "ಧನ್ಯವಾದ", en: "Dhanyavada", font: "Thank You", font: "🤝" },
-            { cat: "Phrases", font: "ಹೌದು", en: "Haudu", font: "Yes", font: "👍" },
-            { cat: "Phrases", font: "ಇಲ್ಲ", font: "Illa", mean: "No", img: "👎" },
-            { cat: "Phrases", font: "ದಯವಿಟ್ಟು", en: "Dayavittu", mean: "Please", img: "🥺" }
+            { cat: "Phrases", kn: "ನಮಸ್ಕಾರ", en: "Namaskara", mean: "Hello / Welcome", img: "🙏" },
+            { cat: "Phrases", kn: "ಶುಭೋದಯ", en: "Shubhodaya", mean: "Good Morning", img: "🌅" },
+            { cat: "Phrases", kn: "ಧನ್ಯವಾದ", en: "Dhanyavada", mean: "Thank You", img: "🤝" },
+            { cat: "Phrases", kn: "ಹೌದು", en: "Haudu", mean: "Yes", img: "👍" },
+            { cat: "Phrases", kn: "ಇಲ್ಲ", en: "Illa", mean: "No", img: "👎" },
+            { cat: "Phrases", kn: "ದಯವಿಟ್ಟು", en: "Dayavittu", mean: "Please", img: "🥺" }
         ];
 
         const rhymesData = [
@@ -1081,10 +1100,10 @@
                 icon: "🐶",
                 meaning: "A beautiful poem about a child talking to a little puppy, asking if it wants snacks or milk, and asking it to guard the house carefully!",
                 lines: [
-                    { font: "ನಾಯಿ ಮರಿ, ನಾಯಿ ಮರಿ, ತಿಂಡಿ ಬೇಕೆ?", font: "Nayi mari, nayi mari, tindi beke?", mean: "Little puppy, little puppy, do you want some snacks?" },
-                    { font: "ತಿಂಡಿ ಬೇಡ, ತೀರ್ಥ ಬೇಡ, ಓಡಿ ಹೋಗು!", font: "Tindi beda, teertha beda, oadi hoagu!", mean: "I don't want snacks, I don't want water, run away!" },
-                    { font: "ಮನೆಯ ಮುಂದೆ ಕಳ್ಳ ಬಂದರೆ ಬೊಗಳುವೆಯಾ?", font: "Maneya munde kalla bandare bogaluveya?", mean: "If a thief comes in front of the house, will you bark?" },
-                    { font: "ಬೌ ಬೌ ಬೌ ಎಂದು ಬೊಗಳುವೆನು!", font: "Bau bau bau endu bogaluvenu!", mean: "I will bark loudly saying Bow Bow Bow!" }
+                    { kn: "ನಾಯಿ ಮರಿ, ನಾಯಿ ಮರಿ, ತಿಂಡಿ ಬೇಕೆ?", en: "Nayi mari, nayi mari, tindi beke?", mean: "Little puppy, little puppy, do you want some snacks?" },
+                    { kn: "ತಿಂಡಿ ಬೇಡ, ತೀರ್ಥ ಬೇಡ, ಓಡಿ ಹೋಗು!", en: "Tindi beda, teertha beda, oadi hoagu!", mean: "I don't want snacks, I don't want water, run away!" },
+                    { kn: "ಮನೆಯ ಮುಂದೆ ಕಳ್ಳ ಬಂದರೆ ಬೊಗಳುವೆಯಾ?", en: "Maneya munde kalla bandare bogaluveya?", mean: "If a thief comes in front of the house, will you bark?" },
+                    { kn: "ಬೌ ಬೌ ಬೌ ಎಂದು ಬೊಗಳುವೆನು!", en: "Bau bau bau endu bogaluvenu!", mean: "I will bark loudly saying Bow Bow Bow!" }
                 ]
             },
             {
@@ -1093,12 +1112,12 @@
                 icon: "🎺",
                 meaning: "A delightful classic rhyme about Kasturi who bought a colorful tin trumpet and marched around proudly playing it!",
                 lines: [
-                    { font: "ಬಣ್ಣದ ತಗಡಿನ ತುತ್ತೂರಿ", font: "Bannada tagadina tutturi", font: "A colorful shiny tin trumpet" },
-                    { font: "ಕಾಸಿಗೆ ಕೊಂಡನು ಕಸ್ತೂರಿ", en: "Kaasige kondanu kasturi", mean: "Kasturi bought it for his coins" },
-                    { font: "ಸರಿಗಮಪದನಿಸ ಊದಿದನು", font: "Sarigamapadanisa oodidanu", mean: "He blew musical notes Sa-Ri-Ga-Ma-Pa-Da-Ni-Sa" },
-                    { font: "ಸಂಜೆ ವರೆಗೂ ಊದಿದನು", font: "Sanje varegoo oodidanu", font: "He joyfully blew it all the way until evening!" },
-                    { font: "ಕೊಳದಲಿ ತುತ್ತೂರಿ ಬಿದ್ದಿತು", font: "Koladali tutturi bidditu", font: "Oh no! The trumpet fell into the pond" },
-                    { font: "ತುತ್ತೂರಿ ಬಣ್ಣವು ಅಳಿಸಿತು!", en: "Tutturi bannavu alishitu!", font: "And all the colorful paint washed away!" }
+                    { kn: "ಬಣ್ಣದ ತಗಡಿನ ತುತ್ತೂರಿ", en: "Bannada tagadina tutturi", mean: "A colorful shiny tin trumpet" },
+                    { kn: "ಕಾಸಿಗೆ ಕೊಂಡನು ಕಸ್ತೂರಿ", en: "Kaasige kondanu kasturi", mean: "Kasturi bought it for his coins" },
+                    { kn: "ಸರಿಗಮಪದನಿಸ ಊದಿದನು", en: "Sarigamapadanisa oodidanu", mean: "He blew musical notes Sa-Ri-Ga-Ma-Pa-Da-Ni-Sa" },
+                    { kn: "ಸಂಜೆ ವರೆಗೂ ಊದಿದನು", en: "Sanje varegoo oodidanu", mean: "He joyfully blew it all the way until evening!" },
+                    { kn: "ಕೊಳದಲಿ ತುತ್ತೂರಿ ಬಿದ್ದಿತು", en: "Koladali tutturi bidditu", mean: "Oh no! The trumpet fell into the pond" },
+                    { kn: "ತುತ್ತೂರಿ ಬಣ್ಣವು ಅಳಿಸಿತು!", en: "Tutturi bannavu alishitu!", mean: "And all the colorful paint washed away!" }
                 ]
             },
             {
@@ -1107,13 +1126,82 @@
                 icon: "🙏",
                 meaning: "A gentle morning prayer dedicated to learning, seeking wisdom, good habits, and kindness towards teachers and parents.",
                 lines: [
-                    { font: "ಕೈಮುಗಿದು ಕೇಳುವೆನು ಸರಸ್ವತಿಯೆ", font: "Kaimugidu kealuvenu Saraswatiye", font: "I fold my hands and pray to you, Goddess of Wisdom" },
-                    { font: "ಒಳ್ಳೆಯ ಬುದ್ಧಿಯನು ಕೊಡು ತಾಯೆ", font: "Olleya buddhiyanu kodu taaye", font: "Please bless me with good intellect and bright wisdom, Mother" },
-                    { font: "ಗುರುಹಿರಿಯರಲ್ಲಿ ಭಕ್ತಿಯನು", font: "Guruhiriyaralli bhaktiyanu", font: "Give me deep respect for my teachers and elders" },
-                    { font: "ವಿದ್ಯೆಯಲ್ಲಿ ಸದಾ ಆಸಕ್ತಿಯನು", font: "Vidyeyalli sadaa aasaktiyanu", font: "And keep me always passionate about learning and school!" }
+                    { kn: "ಕೈಮುಗಿದು ಕೇಳುವೆನು ಸರಸ್ವತಿಯೆ", en: "Kaimugidu kealuvenu Saraswatiye", mean: "I fold my hands and pray to you, Goddess of Wisdom" },
+                    { kn: "ಒಳ್ಳೆಯ ಬುದ್ಧಿಯನು ಕೊಡು ತಾಯೆ", en: "Olleya buddhiyanu kodu taaye", mean: "Please bless me with good intellect and bright wisdom, Mother" },
+                    { kn: "ಗುರುಹಿರಿಯರಲ್ಲಿ ಭಕ್ತಿಯನು", en: "Guruhiriyaralli bhaktiyanu", mean: "Give me deep respect for my teachers and elders" },
+                    { kn: "ವಿದ್ಯೆಯಲ್ಲಿ ಸದಾ ಆಸಕ್ತಿಯನು", en: "Vidyeyalli sadaa aasaktiyanu", mean: "And keep me always passionate about learning and school!" }
                 ]
             }
         ];
+
+        /* ================= 100% BULLETPROOF TAB & FILTER SWITCHING ================= */
+        function switchTab(tabId) {
+            safeExec(() => {
+                currentTab = tabId;
+                document.querySelectorAll('.tab-btn').forEach(btn => { 
+                    if (btn.getAttribute('data-tab') === tabId) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+
+                document.querySelectorAll('.tab-content').forEach(section => { 
+                    section.classList.add('hidden'); 
+                });
+
+                const activeSec = document.getElementById('sec-' + tabId);
+                if (activeSec) activeSec.classList.remove('hidden');
+
+                const mascotEl = document.getElementById('mascot-text');
+                if (mascotEl) {
+                    if (tabId === 'varnamale') mascotEl.innerText = "ವರ್ಣಮಾಲೆ (Varnamale) is the heart of Kannada! Let's read vowels and win +1 ⭐ per card.";
+                    else if (tabId === 'numbers') mascotEl.innerText = "ಸಂಖ್ಯೆಗಳು (Sankhyegalu)! Count from one to twenty and win +1 ⭐ per number.";
+                    else if (tabId === 'words') mascotEl.innerText = "ಪದಗಳು (Vocabulary)! Click any picture card to flip it over and win +2 ⭐.";
+                    else if (tabId === 'games') mascotEl.innerText = "ಆಟಗಳು (Games)! Play Simple Quizzes or Word Balloon Pop to collect endless Golden Stars!";
+                    else if (tabId === 'rhymes') mascotEl.innerText = "ಪದ್ಯಗಳು (Rhymes)! Super fun songs from your NPS Grade 2 books. Read aloud to win +10 ⭐!";
+                    else if (tabId === 'buddy') mascotEl.innerText = "Praveen Buddy! Search for any word instantly, or build cool Kannada sentences.";
+                    else if (tabId === 'trophy') mascotEl.innerText = "Trophy Showcase! Look at all your royal prizes unlocked by your smart victories.";
+                }
+            });
+        }
+
+        function filterWords(cat) {
+            safeExec(() => {
+                document.querySelectorAll('.word-filter-btn').forEach(btn => {
+                    if (btn.getAttribute('data-cat') === cat) {
+                        btn.className = "word-filter-btn active bg-brand-purple text-white px-3 py-1.5 rounded-xl font-bold text-xs shadow btn-push";
+                    } else {
+                        btn.className = "word-filter-btn bg-white text-gray-700 hover:bg-purple-50 px-3 py-1.5 rounded-xl font-bold text-xs border border-purple-200 shadow btn-push";
+                    }
+                });
+                renderFlashcards(cat);
+                speakKannada(cat === 'All' ? 'ಎಲ್ಲಾ ಪದಗಳು' : cat, cat, `Category: ${cat}`);
+            });
+        }
+
+        function filterVarnamale(type) {
+            safeExec(() => {
+                const vGrid = document.getElementById('vowels-grid');
+                const cGrid = document.getElementById('consonants-grid');
+                const bVowels = document.getElementById('btn-vowels');
+                const bCons = document.getElementById('btn-consonants');
+
+                if (type === 'vowels') {
+                    if(vGrid) vGrid.classList.remove('hidden');
+                    if(cGrid) cGrid.classList.add('hidden');
+                    if(bVowels) bVowels.className = "bg-brand-teal text-white font-bold px-4 py-2 rounded-xl text-sm shadow btn-push";
+                    if(bCons) bCons.className = "bg-white text-brand-teal border border-brand-teal font-bold px-4 py-2 rounded-xl text-sm shadow hover:bg-teal-50 btn-push";
+                    speakKannada("ಸ್ವರಗಳು", "Swaragalu", "Kannada Vowels");
+                } else {
+                    if(vGrid) vGrid.classList.add('hidden');
+                    if(cGrid) cGrid.classList.remove('hidden');
+                    if(bCons) bCons.className = "bg-brand-teal text-white font-bold px-4 py-2 rounded-xl text-sm shadow btn-push";
+                    if(bVowels) bVowels.className = "bg-white text-brand-teal border border-brand-teal font-bold px-4 py-2 rounded-xl text-sm shadow hover:bg-teal-50 btn-push";
+                    speakKannada("ವ್ಯಂಜನಗಳು", "Vyanjanagalu", "Kannada Consonants");
+                }
+            });
+        }
 
         /* ================= GAME 1: EXPANDED ULTRA-SIMPLE PICTURE QUIZ ================= */
         let simpleQuizIndex = 0;
@@ -1121,139 +1209,173 @@
         let simpleQuestionsBank = [];
 
         function initSimpleQuiz() {
-            simpleQuizScore = 0;
-            simpleQuizIndex = 0;
-            document.getElementById('sq-score').innerText = simpleQuizScore;
+            safeExec(() => {
+                simpleQuizScore = 0;
+                simpleQuizIndex = 0;
+                const sc = document.getElementById('sq-score');
+                if (sc) sc.innerText = simpleQuizScore;
 
-            const easyWords = [...vocabularyData, ...numbersData.map(n => ({ kn: n.knWord, en: n.enWord, mean: n.mean, img: '🔢', cat: "Numbers" }))];
-            
-            simpleQuestionsBank = easyWords.sort(() => 0.5 - Math.random()).slice(0, 25).map(target => {
-                const wrongChoices = easyWords.filter(w => w.mean !== target.mean).sort(() => 0.5 - Math.random()).slice(0, 3);
-                const options = [target, ...wrongChoices].sort(() => 0.5 - Math.random());
+                const easyWords = [...vocabularyData, ...numbersData.map(n => ({ kn: n.knWord, en: n.enWord, mean: n.mean, img: '🔢', cat: "Numbers" }))];
                 
-                return {
-                    question: `Which picture is '${target.mean}' (${target.kn})?`,
-                    correctKn: target.kn,
-                    correctMean: target.mean,
-                    correctImg: target.img || '✨',
-                    cat: target.cat,
-                    options: options
-                };
-            });
+                simpleQuestionsBank = easyWords.sort(() => 0.5 - Math.random()).slice(0, 25).map(target => {
+                    const wrongChoices = easyWords.filter(w => w.mean !== target.mean).sort(() => 0.5 - Math.random()).slice(0, 3);
+                    const options = [target, ...wrongChoices].sort(() => 0.5 - Math.random());
+                    
+                    return {
+                        question: `Which picture is '${target.mean}' (${target.kn})?`,
+                        correctKn: target.kn,
+                        correctMean: target.mean,
+                        correctImg: target.img || '✨',
+                        cat: target.cat,
+                        options: options
+                    };
+                });
 
-            loadSimpleQuizQuestion();
+                loadSimpleQuizQuestion();
+            });
         }
 
         function loadSimpleQuizQuestion() {
-            if (simpleQuizIndex >= simpleQuestionsBank.length) {
-                showSimpleQuizVictory();
-                return;
-            }
+            safeExec(() => {
+                if (simpleQuizIndex >= simpleQuestionsBank.length) {
+                    showSimpleQuizVictory();
+                    return;
+                }
 
-            const q = simpleQuestionsBank[simpleQuizIndex];
-            document.getElementById('sq-progress').innerText = `Question ${simpleQuizIndex + 1} / 25`;
-            document.getElementById('sq-cat').innerText = `Topic: ${q.cat}`;
-            document.getElementById('sq-question').innerText = q.question;
+                const q = simpleQuestionsBank[simpleQuizIndex];
+                const prObj = document.getElementById('sq-progress');
+                const ctObj = document.getElementById('sq-cat');
+                const qsObj = document.getElementById('sq-question');
+                
+                if (prObj) prObj.innerText = `Question ${simpleQuizIndex + 1} / 25`;
+                if (ctObj) ctObj.innerText = `Topic: ${q.cat}`;
+                if (qsObj) qsObj.innerText = q.question;
 
-            const choicesCont = document.getElementById('sq-choices');
-            choicesCont.innerHTML = q.options.map(opt => `
-                <button onclick="handleSimpleAnswer('${opt.kn}', '${q.correctKn}', '${q.correctMean}', this)" 
-                        class="sq-opt-btn bg-yellow-50 hover:bg-yellow-100 border-4 border-yellow-200 font-bold p-6 rounded-3xl shadow-lg flex flex-col items-center justify-center gap-2 transform hover:scale-105 transition btn-push">
-                    <span class="text-6xl">${opt.img || '✨'}</span>
-                    <span class="text-xl font-kannada font-black text-gray-800">${opt.kn}</span>
-                </button>
-            `).join('');
+                const choicesCont = document.getElementById('sq-choices');
+                if (choicesCont) {
+                    choicesCont.innerHTML = q.options.map(opt => `
+                        <button onclick="handleSimpleAnswer('${opt.kn}', '${q.correctKn}', '${q.correctMean}', this)" 
+                                class="sq-opt-btn bg-yellow-50 hover:bg-yellow-100 border-4 border-yellow-200 font-bold p-6 rounded-3xl shadow-lg flex flex-col items-center justify-center gap-2 transform hover:scale-105 transition btn-push">
+                            <span class="text-6xl">${opt.img || '✨'}</span>
+                            <span class="text-xl font-kannada font-black text-gray-800">${opt.kn}</span>
+                        </button>
+                    `).join('');
+                }
 
-            document.getElementById('sq-feedback').innerHTML = '';
+                const fbObj = document.getElementById('sq-feedback');
+                if (fbObj) fbObj.innerHTML = '';
+            });
         }
 
         function handleSimpleAnswer(selectedKn, correctKn, correctMean, btnEl) {
-            const feedbackEl = document.getElementById('sq-feedback');
-            document.querySelectorAll('.sq-opt-btn').forEach(b => b.disabled = true);
+            safeExec(() => {
+                const feedbackEl = document.getElementById('sq-feedback');
+                document.querySelectorAll('.sq-opt-btn').forEach(b => b.disabled = true);
 
-            if (selectedKn === correctKn) {
-                simpleQuizScore += 10;
-                document.getElementById('sq-score').innerText = simpleQuizScore;
-                
-                btnEl.classList.remove('bg-yellow-50', 'border-yellow-200');
-                btnEl.classList.add('bg-green-200', 'border-green-500', 'animate-bounce');
+                if (selectedKn === correctKn) {
+                    simpleQuizScore += 10;
+                    const sc = document.getElementById('sq-score');
+                    if(sc) sc.innerText = simpleQuizScore;
+                    
+                    if(btnEl) {
+                        btnEl.classList.remove('bg-yellow-50', 'border-yellow-200');
+                        btnEl.classList.add('bg-green-200', 'border-green-500', 'animate-bounce');
+                    }
 
-                triggerVictoryCheer(5);
-                feedbackEl.innerHTML = `<span class="bg-green-100 text-brand-green font-black px-6 py-2 rounded-2xl text-lg inline-block">🌟 Outstanding! Correct Answer! (+5 ⭐)</span>`;
-            } else {
-                btnEl.classList.add('bg-red-200', 'border-red-500');
-                testGameSound('buzz');
-                speakKannada("ಅಯ್ಯೋ ತಪ್ಪು!", "Ayyo tappu! It's okay, keep trying!");
-                feedbackEl.innerHTML = `<span class="bg-red-100 text-brand-pink font-black px-6 py-2 rounded-2xl text-lg inline-block">Oops! Correct is <span class="font-kannada underline">${correctKn}</span></span>`;
-            }
+                    triggerVictoryCheer(5);
+                    if(feedbackEl) feedbackEl.innerHTML = `<span class="bg-green-100 text-brand-green font-black px-6 py-2 rounded-2xl text-lg inline-block">🌟 Outstanding! Correct Answer! (+5 ⭐)</span>`;
+                } else {
+                    if(btnEl) btnEl.classList.add('bg-red-200', 'border-red-500');
+                    testGameSound('buzz');
+                    speakKannada("ಅಯ್ಯೋ ತಪ್ಪು!", "Ayyo tappu! It's okay, keep trying!");
+                    if(feedbackEl) feedbackEl.innerHTML = `<span class="bg-red-100 text-brand-pink font-black px-6 py-2 rounded-2xl text-lg inline-block">Oops! Correct is <span class="font-kannada underline">${correctKn}</span></span>`;
+                }
 
-            setTimeout(() => {
-                simpleQuizIndex++;
-                loadSimpleQuizQuestion();
-            }, 2200);
+                setTimeout(() => {
+                    simpleQuizIndex++;
+                    loadSimpleQuizQuestion();
+                }, 2200);
+            });
         }
 
         function showSimpleQuizVictory() {
-            confetti({ particleCount: 200, spread: 120, origin: { y: 0.4 } });
-            testGameSound('win');
-            document.getElementById('game-simple-container').innerHTML = `
-                <div class="text-center py-8 space-y-4">
-                    <div class="text-7xl animate-bounce">🏆</div>
-                    <h3 class="text-3xl font-black text-brand-orange font-kannada">Quiz Completed! What a Champion!</h3>
-                    <p class="text-lg font-bold text-gray-700">You won <span class="text-2xl text-brand-green">${simpleQuizScore}</span> Magic Points & collected massive Golden Stars!</p>
-                    <button onclick="initSimpleQuiz()" class="mt-4 bg-brand-green text-white font-black px-8 py-3 rounded-2xl shadow-lg hover:bg-green-600 btn-push inline-block">
-                        <i class="fas fa-redo mr-2"></i> Play Another Fun Quiz
-                    </button>
-                </div>
-            `;
+            safeExec(() => {
+                if (window.confetti) {
+                    confetti({ particleCount: 200, spread: 120, origin: { y: 0.4 } });
+                }
+                testGameSound('win');
+                const cont = document.getElementById('game-simple-container');
+                if (cont) {
+                    cont.innerHTML = `
+                        <div class="text-center py-8 space-y-4">
+                            <div class="text-7xl animate-bounce">🏆</div>
+                            <h3 class="text-3xl font-black text-brand-orange font-kannada">Quiz Completed! What a Champion!</h3>
+                            <p class="text-lg font-bold text-gray-700">You won <span class="text-2xl text-brand-green">${simpleQuizScore}</span> Magic Points & collected massive Golden Stars!</p>
+                            <button onclick="initSimpleQuiz()" class="mt-4 bg-brand-green text-white font-black px-8 py-3 rounded-2xl shadow-lg hover:bg-green-600 btn-push inline-block">
+                                <i class="fas fa-redo mr-2"></i> Play Another Fun Quiz
+                            </button>
+                        </div>
+                    `;
+                }
+            });
         }
 
         /* ================= GAME 2: WORD BALLOON POP ================= */
         let balloonTarget = null;
 
         function initBalloonPop() {
-            document.getElementById('bp-success').classList.add('hidden');
-            
-            const items = vocabularyData.sort(() => 0.5 - Math.random()).slice(0, 5);
-            balloonTarget = items[0];
+            safeExec(() => {
+                const succ = document.getElementById('bp-success');
+                if (succ) succ.classList.add('hidden');
+                
+                const items = vocabularyData.sort(() => 0.5 - Math.random()).slice(0, 5);
+                balloonTarget = items[0];
 
-            document.getElementById('bp-target').innerText = `${balloonTarget.kn} (${balloonTarget.mean})`;
-            speakKannada(`Pop the balloon saying ${balloonTarget.mean}`, balloonTarget.en, `Look for ${balloonTarget.kn}`);
+                const tgt = document.getElementById('bp-target');
+                if (tgt) tgt.innerText = `${balloonTarget.kn} (${balloonTarget.mean})`;
+                speakKannada(`Pop the balloon saying ${balloonTarget.mean}`, balloonTarget.en, `Look for ${balloonTarget.kn}`);
 
-            const area = document.getElementById('bp-area');
-            const balloons = items.sort(() => 0.5 - Math.random());
+                const area = document.getElementById('bp-area');
+                if (!area) return;
 
-            const balloonColors = ['bg-pink-500', 'bg-blue-500', 'bg-yellow-500', 'bg-green-500', 'bg-purple-500'];
+                const balloons = items.sort(() => 0.5 - Math.random());
+                const balloonColors = ['bg-pink-500', 'bg-blue-500', 'bg-yellow-500', 'bg-green-500', 'bg-purple-500'];
 
-            area.innerHTML = balloons.map((b, idx) => `
-                <div id="bal-${b.kn}" onclick="popBalloon('${b.kn}', '${b.mean}', this)" 
-                     class="cursor-pointer transform hover:-translate-y-4 transition duration-300 flex flex-col items-center group">
-                    <div class="${balloonColors[idx % balloonColors.length]} text-white w-28 h-36 rounded-full shadow-2xl flex flex-col items-center justify-center p-3 text-center border-4 border-white relative animate-sparkle">
-                        <div class="absolute -bottom-2 w-3 h-4 bg-amber-600 rounded-sm"></div>
-                        <span class="text-3xl font-black font-kannada">${b.kn}</span>
-                        <span class="text-[11px] font-bold mt-1 opacity-90">${b.img}</span>
+                area.innerHTML = balloons.map((b, idx) => `
+                    <div id="bal-${b.kn}" onclick="popBalloon('${b.kn}', '${b.mean}', this)" 
+                         class="cursor-pointer transform hover:-translate-y-4 transition duration-300 flex flex-col items-center group">
+                        <div class="${balloonColors[idx % balloonColors.length]} text-white w-28 h-36 rounded-full shadow-2xl flex flex-col items-center justify-center p-3 text-center border-4 border-white relative animate-sparkle">
+                            <div class="absolute -bottom-2 w-3 h-4 bg-amber-600 rounded-sm"></div>
+                            <span class="text-3xl font-black font-kannada">${b.kn}</span>
+                            <span class="text-[11px] font-bold mt-1 opacity-90">${b.img}</span>
+                        </div>
+                        <div class="w-1 h-16 bg-gray-400 mt-2"></div>
                     </div>
-                    <div class="w-1 h-16 bg-gray-400 mt-2"></div>
-                </div>
-            `).join('');
+                `).join('');
+            });
         }
 
         function popBalloon(clickedKn, clickedMean, el) {
-            if (clickedKn === balloonTarget.kn) {
-                el.innerHTML = `<span class="text-7xl animate-bounce">💥</span>`;
-                document.getElementById('bp-success').classList.remove('hidden');
-                
-                triggerVictoryCheer(15);
-                
-                setTimeout(() => {
-                    initBalloonPop();
-                }, 2800);
-            } else {
-                testGameSound('buzz');
-                speakKannada("ಅಯ್ಯೋ ತಪ್ಪು!", "Not that one! Click " + balloonTarget.kn);
-                el.classList.add('animate-shake');
-                setTimeout(() => el.classList.remove('animate-shake'), 600);
-            }
+            safeExec(() => {
+                if (clickedKn === balloonTarget.kn) {
+                    if (el) el.innerHTML = `<span class="text-7xl animate-bounce">💥</span>`;
+                    const succ = document.getElementById('bp-success');
+                    if (succ) succ.classList.remove('hidden');
+                    
+                    triggerVictoryCheer(15);
+                    
+                    setTimeout(() => {
+                        initBalloonPop();
+                    }, 2800);
+                } else {
+                    testGameSound('buzz');
+                    speakKannada("ಅಯ್ಯೋ ತಪ್ಪು!", "Not that one! Click " + balloonTarget.kn);
+                    if(el) {
+                        el.classList.add('animate-shake');
+                        setTimeout(() => el.classList.remove('animate-shake'), 600);
+                    }
+                }
+            });
         }
 
         /* --- GAME 3: MATCH THE PAIRS --- */
@@ -1263,193 +1385,206 @@
         let matchMatchedPairs = new Set();
 
         function initMatchGame() {
-            matchSelectedLeft = null;
-            matchMatchedPairs.clear();
-            document.getElementById('match-success-msg').classList.add('hidden');
+            safeExec(() => {
+                matchSelectedLeft = null;
+                matchMatchedPairs.clear();
+                const sucMsg = document.getElementById('match-success-msg');
+                if (sucMsg) sucMsg.classList.add('hidden');
 
-            const pairs = vocabularyData.sort(() => 0.5 - Math.random()).slice(0, 5);
-            
-            matchLeftItems = pairs.map(p => ({ id: p.kn, text: p.kn, en: p.en, matchId: p.mean })).sort(() => 0.5 - Math.random());
-            matchRightItems = pairs.map(p => ({ id: p.mean, text: `${p.img} ${p.mean}`, matchId: p.kn })).sort(() => 0.5 - Math.random());
+                const pairs = vocabularyData.sort(() => 0.5 - Math.random()).slice(0, 5);
+                
+                matchLeftItems = pairs.map(p => ({ id: p.kn, text: p.kn, en: p.en, matchId: p.mean })).sort(() => 0.5 - Math.random());
+                matchRightItems = pairs.map(p => ({ id: p.mean, text: `${p.img} ${p.mean}`, matchId: p.kn })).sort(() => 0.5 - Math.random());
 
-            renderMatchGame();
-            clearMatchCanvas();
+                renderMatchGame();
+                clearMatchCanvas();
+            });
         }
 
         function renderMatchGame() {
-            const leftCont = document.getElementById('match-left');
-            const rightCont = document.getElementById('match-right');
+            safeExec(() => {
+                const leftCont = document.getElementById('match-left');
+                const rightCont = document.getElementById('match-right');
+                if (!leftCont || !rightCont) return;
 
-            leftCont.innerHTML = matchLeftItems.map(item => `
-                <button id="ml-${item.id}" onclick="onSelectMatchLeft('${item.id}', '${item.en}')" 
-                        class="match-card bg-orange-50 border-2 border-orange-200 font-kannada font-bold text-xl py-3.5 px-6 rounded-2xl shadow text-gray-800 transition text-center">
-                    ${item.text}
-                </button>
-            `).join('');
+                leftCont.innerHTML = matchLeftItems.map((item, idx) => `
+                    <button id="ml-${idx}" onclick="onSelectMatchLeft(${idx}, '${item.en}')" 
+                            class="match-card bg-orange-50 border-2 border-orange-200 font-kannada font-bold text-xl py-3.5 px-6 rounded-2xl shadow text-gray-800 transition text-center btn-push">
+                        ${item.text}
+                    </button>
+                `).join('');
 
-            rightCont.innerHTML = matchRightItems.map(item => `
-                <button id="mr-${item.id}" onclick="onSelectMatchRight('${item.id}')" 
-                        class="match-card bg-blue-50 border-2 border-blue-200 font-bold text-base py-3.5 px-6 rounded-2xl shadow text-gray-800 transition text-center">
-                    ${item.text}
-                </button>
-            `).join('');
+                rightCont.innerHTML = matchRightItems.map((item, idx) => `
+                    <button id="mr-${idx}" onclick="onSelectMatchRight(${idx})" 
+                            class="match-card bg-blue-50 border-2 border-blue-200 font-bold text-base py-3.5 px-6 rounded-2xl shadow text-gray-800 transition text-center btn-push">
+                        ${item.text}
+                    </button>
+                `).join('');
+            });
         }
 
-        function onSelectMatchLeft(leftId, leftEn) {
-            if (matchMatchedPairs.has(leftId)) return;
-            
-            matchSelectedLeft = leftId;
-            document.querySelectorAll('#match-left .match-card').forEach(b => b.classList.remove('ring-4', 'ring-orange-400', 'bg-orange-200'));
-            const btn = document.getElementById(`ml-${leftId}`);
-            if (btn) btn.classList.add('ring-4', 'ring-orange-400', 'bg-orange-200');
-            speakKannada(leftId, leftEn, "Find matching meaning!");
+        function onSelectMatchLeft(leftIndex, leftEn) {
+            safeExec(() => {
+                const item = matchLeftItems[leftIndex];
+                if (!item || matchMatchedPairs.has(item.id)) return;
+                
+                matchSelectedLeft = item;
+                document.querySelectorAll('#match-left .match-card').forEach(b => b.classList.remove('ring-4', 'ring-orange-400', 'bg-orange-200'));
+                const btn = document.getElementById(`ml-${leftIndex}`);
+                if (btn) btn.classList.add('ring-4', 'ring-orange-400', 'bg-orange-200');
+                speakKannada(item.id, leftEn, "Find matching meaning!");
+            });
         }
 
-        function onSelectMatchRight(rightId) {
-            if (!matchSelectedLeft || matchMatchedPairs.has(rightId)) return;
+        function onSelectMatchRight(rightIndex) {
+            safeExec(() => {
+                const item = matchRightItems[rightIndex];
+                if (!item || !matchSelectedLeft || matchMatchedPairs.has(item.id)) return;
 
-            const leftObj = matchLeftItems.find(l => l.id === matchSelectedLeft);
-            
-            if (leftObj && leftObj.matchId === rightId) {
-                matchMatchedPairs.add(matchSelectedLeft);
-                matchMatchedPairs.add(rightId);
+                if (matchSelectedLeft.matchId === item.id) {
+                    matchMatchedPairs.add(matchSelectedLeft.id);
+                    matchMatchedPairs.add(item.id);
 
-                const lBtn = document.getElementById(`ml-${matchSelectedLeft}`);
-                const rBtn = document.getElementById(`mr-${rightId}`);
-                lBtn.className = "match-card bg-green-200 border-2 border-green-500 font-kannada font-bold text-xl py-3.5 px-6 rounded-2xl shadow text-green-900 text-center opacity-80";
-                rBtn.className = "match-card bg-green-200 border-2 border-green-500 font-bold text-base py-3.5 px-6 rounded-2xl shadow text-green-900 text-center opacity-80";
+                    // match right index
+                    const leftIndex = matchLeftItems.findIndex(l => l.id === matchSelectedLeft.id);
+                    const lBtn = document.getElementById(`ml-${leftIndex}`);
+                    const rBtn = document.getElementById(`mr-${rightIndex}`);
+                    
+                    if(lBtn) lBtn.className = "match-card bg-green-200 border-2 border-green-500 font-kannada font-bold text-xl py-3.5 px-6 rounded-2xl shadow text-green-900 text-center opacity-80";
+                    if(rBtn) rBtn.className = "match-card bg-green-200 border-2 border-green-500 font-bold text-base py-3.5 px-6 rounded-2xl shadow text-green-900 text-center opacity-80";
 
-                drawMatchLine(lBtn, rBtn);
-                triggerVictoryCheer(5);
+                    if(lBtn && rBtn) drawMatchLine(lBtn, rBtn);
+                    triggerVictoryCheer(5);
 
-                matchSelectedLeft = null;
+                    matchSelectedLeft = null;
 
-                if (matchMatchedPairs.size === matchLeftItems.length * 2) {
-                    confetti({ particleCount: 150, spread: 100 });
-                    document.getElementById('match-success-msg').classList.remove('hidden');
+                    if (matchMatchedPairs.size === matchLeftItems.length * 2) {
+                        if(window.confetti) confetti({ particleCount: 150, spread: 100 });
+                        const msg = document.getElementById('match-success-msg');
+                        if (msg) msg.classList.remove('hidden');
+                    }
+                } else {
+                    testGameSound('buzz');
+                    speakKannada("ಅಯ್ಯೋ ತಪ್ಪು!", "Ayyo tappu!", "Try another pair!");
+                    const rBtn = document.getElementById(`mr-${rightIndex}`);
+                    if(rBtn) {
+                        rBtn.classList.add('bg-red-200');
+                        setTimeout(() => rBtn.classList.remove('bg-red-200'), 800);
+                    }
                 }
-            } else {
-                testGameSound('buzz');
-                speakKannada("ಅಯ್ಯೋ ತಪ್ಪು!", "Ayyo tappu!", "Try another pair!");
-                const rBtn = document.getElementById(`mr-${rightId}`);
-                rBtn.classList.add('bg-red-200');
-                setTimeout(() => rBtn.classList.remove('bg-red-200'), 800);
-            }
+            });
         }
 
         function drawMatchLine(el1, el2) {
-            const canvas = document.getElementById('match-canvas');
-            const area = document.getElementById('match-game-area');
-            if (!canvas || !area) return;
+            safeExec(() => {
+                const canvas = document.getElementById('match-canvas');
+                const area = document.getElementById('match-game-area');
+                if (!canvas || !area) return;
 
-            if (canvas.width !== area.clientWidth) {
-                canvas.width = area.clientWidth;
-                canvas.height = area.clientHeight;
-            }
+                if (canvas.width !== area.clientWidth) {
+                    canvas.width = area.clientWidth;
+                    canvas.height = area.clientHeight;
+                }
 
-            const rectArea = area.getBoundingClientRect();
-            const r1 = el1.getBoundingClientRect();
-            const r2 = el2.getBoundingClientRect();
+                const rectArea = area.getBoundingClientRect();
+                const r1 = el1.getBoundingClientRect();
+                const r2 = el2.getBoundingClientRect();
 
-            const x1 = r1.right - rectArea.left;
-            const y1 = r1.top + r1.height/2 - rectArea.top;
-            const x2 = r2.left - rectArea.left;
-            const y2 = r2.top + r2.height/2 - rectArea.top;
+                const x1 = r1.right - rectArea.left;
+                const y1 = r1.top + r1.height/2 - rectArea.top;
+                const x2 = r2.left - rectArea.left;
+                const y2 = r2.top + r2.height/2 - rectArea.top;
 
-            const ctx = canvas.getContext('2d');
-            ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
-            ctx.strokeStyle = '#00A86B';
-            ctx.lineWidth = 4;
-            ctx.stroke();
+                const ctx = canvas.getContext('2d');
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.strokeStyle = '#00A86B';
+                ctx.lineWidth = 4;
+                ctx.stroke();
+            });
         }
 
         function clearMatchCanvas() {
-            const canvas = document.getElementById('match-canvas');
-            const area = document.getElementById('match-game-area');
-            if (!canvas || !area) return;
-            canvas.width = area.clientWidth;
-            canvas.height = area.clientHeight;
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            safeExec(() => {
+                const canvas = document.getElementById('match-canvas');
+                const area = document.getElementById('match-game-area');
+                if (!canvas || !area) return;
+                canvas.width = area.clientWidth;
+                canvas.height = area.clientHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            });
         }
 
         function switchGameMode(mode) {
-            const mSimple = document.getElementById('game-simple-container');
-            const mBalloon = document.getElementById('game-balloon-container');
-            const mMatch = document.getElementById('game-match-container');
-            
-            const bSimple = document.getElementById('btn-mode-simple');
-            const bBalloon = document.getElementById('btn-mode-balloon');
-            const bMatch = document.getElementById('btn-mode-match');
+            safeExec(() => {
+                const mSimple = document.getElementById('game-simple-container');
+                const mBalloon = document.getElementById('game-balloon-container');
+                const mMatch = document.getElementById('game-match-container');
+                
+                if(mSimple) mSimple.classList.add('hidden');
+                if(mBalloon) mBalloon.classList.add('hidden');
+                if(mMatch) mMatch.classList.add('hidden');
 
-            mSimple.classList.add('hidden');
-            mBalloon.classList.add('hidden');
-            mMatch.classList.add('hidden');
-
-            bSimple.className = "bg-white text-brand-orange border border-brand-orange font-bold px-4 py-2 rounded-xl text-sm shadow hover:bg-orange-50 btn-push flex items-center gap-1.5";
-            bBalloon.className = "bg-white text-brand-orange border border-brand-orange font-bold px-4 py-2 rounded-xl text-sm shadow hover:bg-orange-50 btn-push flex items-center gap-1.5";
-            bMatch.className = "bg-white text-brand-orange border border-brand-orange font-bold px-4 py-2 rounded-xl text-sm shadow hover:bg-orange-50 btn-push flex items-center gap-1.5";
-
-            if (mode === 'simple_quiz') {
-                mSimple.classList.remove('hidden');
-                bSimple.className = "bg-brand-orange text-white font-bold px-4 py-2 rounded-xl text-sm shadow btn-push flex items-center gap-1.5";
-                initSimpleQuiz();
-            } else if (mode === 'balloon_pop') {
-                mBalloon.classList.remove('hidden');
-                bBalloon.className = "bg-brand-orange text-white font-bold px-4 py-2 rounded-xl text-sm shadow btn-push flex items-center gap-1.5";
-                initBalloonPop();
-            } else {
-                mMatch.classList.remove('hidden');
-                bMatch.className = "bg-brand-orange text-white font-bold px-4 py-2 rounded-xl text-sm shadow btn-push flex items-center gap-1.5";
-                initMatchGame();
-            }
-        }
-
-        /* ================= 📲 ADVANCED SOCIAL MEDIA SHARING SUITE ================= */
-        function toggleShareModal() {
-            const mod = document.getElementById('share-modal');
-            mod.classList.toggle('hidden');
-        }
-
-        function shareOnSocial(platform) {
-            const shareTitle = "🌟 Namma Kannada Tutor - Grade 2 (NPS ITPL) 🎒";
-            const shareDesc = "An expert gamified offline Kannada learning app for kids! Play Star Quizzes, pop Word Balloons, and unlock royal trophies. 👑 Sole Creator & Architect: Praveen Chaudhary.";
-            // A placeholder live link for OpenGraph crawlers
-            const shareUrl = "https://praveenchaudhary-kannadatutor.netlify.app";
-            const fullText = `${shareTitle}\\n${shareDesc}\\n\\nLaunch or host it free here: ${shareUrl}`;
-
-            if (platform === 'whatsapp') {
-                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(fullText)}`, '_blank');
-            } else if (platform === 'facebook') {
-                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank');
-            } else if (platform === 'twitter') {
-                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTitle + " • By Praveen Chaudhary\\n" + shareUrl)}`, '_blank');
-            } else if (platform === 'linkedin') {
-                window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`, '_blank');
-            } else if (platform === 'telegram') {
-                window.open(`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle + " • By Praveen Chaudhary")}`, '_blank');
-            } else if (platform === 'email') {
-                window.location.href = `mailto:?subject=${encodeURIComponent(shareTitle)}&body=${encodeURIComponent(fullText)}`;
-            } else if (platform === 'native') {
-                if (navigator.share) {
-                    navigator.share({
-                        title: shareTitle,
-                        text: shareDesc,
-                        url: shareUrl
-                    }).catch(err => console.log("Share failed:", err));
-                } else {
-                    alert("Native OS Share is not enabled on this laptop/browser. Please choose WhatsApp, Email, or Copy Link!");
-                }
-            } else if (platform === 'copy') {
-                navigator.clipboard.writeText(fullText).then(() => {
-                    const btnTxt = document.getElementById('copy-share-txt');
-                    btnTxt.innerText = "Copied! ✅";
-                    setTimeout(() => btnTxt.innerText = "Copy Share", 2500);
+                document.querySelectorAll('.game-mode-btn').forEach(btn => {
+                    if (btn.getAttribute('data-mode') === mode) {
+                        btn.className = "game-mode-btn bg-brand-orange text-white font-bold px-4 py-2 rounded-xl text-sm shadow btn-push flex items-center gap-1.5";
+                    } else {
+                        btn.className = "game-mode-btn bg-white text-brand-orange border border-brand-orange font-bold px-4 py-2 rounded-xl text-sm shadow hover:bg-orange-50 btn-push flex items-center gap-1.5";
+                    }
                 });
-            }
+
+                if (mode === 'simple_quiz') {
+                    if(mSimple) mSimple.classList.remove('hidden');
+                    initSimpleQuiz();
+                } else if (mode === 'balloon_pop') {
+                    if(mBalloon) mBalloon.classList.remove('hidden');
+                    initBalloonPop();
+                } else {
+                    if(mMatch) mMatch.classList.remove('hidden');
+                    initMatchGame();
+                }
+            });
         }
+
+        function speakAllNumbers() {
+            safeExec(() => {
+                let i = 0;
+                function playNext() {
+                    if (i < numbersData.length) {
+                        const numObj = numbersData[i];
+                        speakKannada(numObj.knWord, numObj.enWord, `Number ${numObj.num} (${numObj.mean})`);
+                        i++;
+                        setTimeout(playNext, 1400);
+                    } else {
+                        speakKannada("ಅದ್ಭುತ! You counted all twenty!", "Adbhuta!", "Wonderful counting!");
+                    }
+                }
+                playNext();
+            });
+        }
+
+        /* ================= UI INITIALIZATION ================= */
+        window.onload = () => {
+            safeExec(() => {
+                renderVarnamale();
+                renderNumbers();
+                renderFlashcards('All');
+                renderRhyme(0);
+                initSimpleQuiz();
+                initMatchGame();
+                searchDictionary();
+                updateSentence();
+
+                addStars(0);
+
+                populateVoices();
+                if ('speechSynthesis' in window && window.speechSynthesis.onvoiceschanged !== undefined) {
+                    window.speechSynthesis.onvoiceschanged = () => populateVoices();
+                }
+            });
+        };
     </script>
 </body>
 </html>
