@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Official Meta Tags for Bookmarking, SEO, and Copyright Attribution -->
+    <meta name="author" content="Praveen Chaudhary">
+    <meta name="description" content="Expert Interactive Kannada Tutor Web Application for Grade 2 (NPS ITPL). Solely created, coded, and designed by software architect Praveen Chaudhary.">
+    <meta name="keywords" content="Kannada Tutor, NPS ITPL Grade 2, Praveen Chaudhary, Interactive Kannada, Standalone Educational App, Kid Rewards, Star Quiz, Kahoot Style Kannada">
+    
+    <!-- OpenGraph Meta Tags for Rich Link Previews on WhatsApp, Facebook, LinkedIn -->
+    <meta property="og:title" content="🌟 Namma Kannada Tutor - Grade 2 (NPS ITPL) • By Praveen Chaudhary">
+    <meta property="og:description" content="An expert gamified offline Kannada learning app for Grade 2 kids. Play star quizzes, unlock royal trophies, and recite textbook rhymes! Solely created and owned by Praveen Chaudhary.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://praveenchaudhary-kannadatutor.netlify.app">
+    <meta property="og:image" content="og_preview.jpg">
+    <meta property="og:image:alt" content="Namma Kannada Tutor by Praveen Chaudhary">
+    <meta property="og:site_name" content="Kannada Tutor by Praveen Chaudhary">
+
+    <!-- Twitter Card Meta Tags for Rich Link Sharing on Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="🌟 Namma Kannada Tutor - Grade 2 • By Praveen Chaudhary">
+    <meta name="twitter:description" content="Gamified interactive offline Kannada E-Tutor for kids. Earn magic stars and unlock royal trophies! Solely created and architected by Praveen Chaudhary.">
+    <meta name="twitter:image" content="og_preview.jpg">
+
+    <title>🌟 Namma Kannada Tutor - Grade 2 • Created by Praveen Chaudhary</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Baloo Chettan 2 and Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for highly professional social & interactive icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti for winning celebrations -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            orange: '#FF7D00',
+                            yellow: '#FFB900',
+                            green: '#00A86B',
+                            teal: '#00B4D8',
+                            purple: '#6D47D9',
+                            pink: '#FF4D6D'
+                        }
+                    },
+                    fontFamily: {
+                        kannada: ['"Baloo Chettan 2"', 'sans-serif'],
+                        sans: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #F8F9FA;
+            background-image: radial-gradient(#E2E8F0 1.5px, transparent 1.5px), radial-gradient(#E2E8F0 1.5px, #F8F9FA 1.5px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+
+        .tab-btn.active {
+            background-color: #FF7D00;
+            color: white;
+            box-shadow: 0 4px 0 #D06000, 0 8px 15px rgba(255, 125, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .kid-card {
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 6px 0 rgba(0,0,0,0.08);
+        }
+
+        .kid-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 0 rgba(0,0,0,0.12);
+        }
+
+        .btn-push {
+            transition: all 0.1s ease;
+        }
+        .btn-push:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 transparent !important;
+        }
+
+        /* Flashcard Flip Effect */
+        .perspective {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        #match-canvas {
+            pointer-events: none;
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+        }
+
+        .animate-bounce-slow {
+            animation: bounce 2s infinite;
+        }
+
+        /* Selection watermark protection */
+        ::selection {
+            background: #FF7D00;
+            color: white;
+        }
+
+        /* Star Sparkle animations */
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+        .animate-sparkle {
+            animation: sparkle 1.5s infinite ease-in-out;
+        }
+
+        /* Shake animation for incorrect balloon */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+        .animate-shake {
+            animation: shake 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="font-sans min-h-screen flex flex-col antialiased pb-32">
+
+    <!-- Persistent Top Copyright & Creator Notice -->
+    <div class="bg-gray-900 text-amber-300 px-4 py-2 text-center text-xs font-bold tracking-wider flex flex-wrap items-center justify-center gap-2 shadow-inner z-50">
+        <span class="flex items-center gap-1.5">👑 SOLELY CREATED & ARCHITECTED BY <span class="text-white underline tracking-widest uppercase font-black text-sm">PRAVEEN CHAUDHARY</span></span>
+        <span class="text-gray-500 hidden sm:inline">•</span>
+        <span class="text-gray-300 font-normal hidden md:inline">© 2026 Praveen Chaudhary. Free educational use. Unauthorized re-hosting or stripping credit is illegal.</span>
+        <button onclick="toggleCopyrightModal()" class="bg-amber-400 hover:bg-amber-300 text-gray-900 font-black px-2.5 py-1 rounded-md text-[10px] uppercase tracking-wider shadow ml-1 btn-push">
+            ⚖️ Legal Info
+        </button>
+    </div>
+
+    <!-- Floating Sticky Header / Navbar -->
+    <header class="bg-gradient-to-r from-brand-orange via-brand-yellow to-brand-green py-3.5 px-4 sm:px-8 text-white shadow-xl sticky top-0 z-40 border-b border-white border-opacity-20">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white p-2.5 rounded-2xl shadow-md transform rotate-3 flex items-center justify-center text-brand-orange font-black text-2xl">
+                    <span>👑</span>
+                </div>
+                <div>
+                    <div class="flex items-center flex-wrap gap-2">
+                        <h1 class="text-xl sm:text-2xl font-black tracking-wide font-kannada flex items-center gap-2">
+                            ನಮ್ಮ Kannada Tutor
+                        </h1>
+                        <span class="text-xs bg-white text-brand-orange font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow">Grade 2 (NPS ITPL)</span>
+                        <span class="text-xs bg-gray-900 text-amber-300 font-black px-3 py-0.5 rounded-full uppercase tracking-widest shadow border border-amber-400">
+                            By Praveen Chaudhary
+                        </span>
+                    </div>
+                    <p class="text-xs font-medium text-amber-50 mt-0.5">Kid's Ultimate Learn & Play E-Tutor • Earn Golden Stars for Every Victory!</p>
+                </div>
+            </div>
+
+            <!-- Central Rewards Counter & Sharing Suite -->
+            <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+                <!-- Golden Star Showcase Button -->
+                <button onclick="switchTab('trophy')" class="bg-gradient-to-r from-yellow-300 to-amber-400 text-gray-900 font-black px-4 py-2 rounded-2xl shadow-lg border-2 border-white flex items-center gap-2 btn-push transform hover:scale-105 transition animate-sparkle" title="Click to view all unlocked trophies!">
+                    <span class="text-xl animate-bounce">⭐</span>
+                    <span class="text-xs uppercase font-bold tracking-wider hidden sm:inline">My Stars:</span>
+                    <span id="header-star-count" class="text-xl font-black text-brand-orange font-kannada">0</span>
+                    <span class="text-xs bg-white text-gray-800 px-2 py-0.5 rounded-full font-bold shadow-sm">Trophies 🏆</span>
+                </button>
+
+                <!-- Voice Speed Selector -->
+                <div class="flex items-center space-x-2 bg-black bg-opacity-20 backdrop-blur-md px-3 py-1.5 rounded-2xl border border-white border-opacity-30 text-xs shadow-inner hidden md:flex">
+                    <i class="fas fa-volume-up text-sm text-yellow-300"></i>
+                    <select id="audio-rate" class="bg-white text-gray-800 font-bold rounded px-1.5 py-1 text-xs cursor-pointer shadow-inner outline-none">
+                        <option value="0.7">Slower (0.7x)</option>
+                        <option value="0.9" selected>Kid Speed (0.9x)</option>
+                        <option value="1.0">Normal (1.0x)</option>
+                    </select>
+                </div>
+
+                <!-- Repeat Button -->
+                <button onclick="repeatLastAudio()" class="bg-white text-brand-orange hover:bg-yellow-50 font-black text-xs px-3 py-2 rounded-xl btn-push shadow flex items-center gap-1.5" title="Repeat last audio">
+                    <i class="fas fa-redo-alt"></i> <span class="hidden lg:inline">Repeat</span>
+                </button>
+
+                <!-- Dedicated Social Media Share Button -->
+                <button onclick="toggleShareModal()" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 font-black text-xs px-4 py-2 rounded-2xl btn-push shadow-lg flex items-center gap-2 border-2 border-blue-300 animate-pulse" title="Share with friends and family on Social Media!">
+                    <i class="fas fa-share-alt text-yellow-300 text-sm"></i> <span>Share App</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Friendly Compliment Victory Toast (Super Fun Reward Bubble) -->
+    <div id="compliment-toast" class="fixed top-20 left-1/2 transform -translate-x-1/2 bg-white rounded-3xl p-6 shadow-2xl border-4 border-yellow-400 z-50 flex items-center space-x-4 max-w-lg w-full transition-all duration-300 pointer-events-none opacity-0 scale-75">
+        <div id="comp-emoji" class="text-6xl animate-bounce">🦁</div>
+        <div class="flex-grow">
+            <span class="text-xs font-black uppercase text-brand-orange tracking-widest block bg-yellow-100 px-2 py-0.5 rounded-md inline-block mb-1">Praveen Guru & NPS Mascot Says:</span>
+            <h3 id="comp-title" class="text-2xl sm:text-3xl font-black font-kannada text-brand-purple">ಶಭಾಷ್! (Shabash!)</h3>
+            <p id="comp-msg" class="text-sm font-bold text-gray-700 mt-0.5">What an incredibly smart victory! Keep going!</p>
+        </div>
+        <div class="flex-shrink-0 text-center">
+            <span id="comp-stars" class="text-2xl font-black text-amber-500 block animate-sparkle">+5 ⭐</span>
+        </div>
+    </div>
+
+    <!-- 📲 Dedicated Interactive Social Media Share & Live Preview Modal -->
+    <div id="share-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border-4 border-blue-500 space-y-6 text-gray-800 relative z-50 max-h-[90vh] overflow-y-auto">
+            <button onclick="toggleShareModal()" class="absolute right-6 top-6 text-gray-400 hover:text-gray-600 text-2xl">
+                <i class="fas fa-times-circle"></i>
+            </button>
+
+            <!-- Share Modal Header -->
+            <div class="flex items-center space-x-3 text-brand-purple font-black text-2xl border-b pb-4 border-gray-100">
+                <div class="bg-blue-100 text-blue-600 p-3 rounded-2xl">
+                    <i class="fas fa-share-alt text-3xl"></i>
+                </div>
+                <div>
+                    <h2>Share With Friends & Family</h2>
+                    <p class="text-xs font-bold text-brand-orange uppercase tracking-wider font-sans">Spread the joy of learning Kannada • Created by Praveen Chaudhary</p>
+                </div>
+            </div>
+
+            <!-- 🎯 Live Social Media Link Preview Card Simulator -->
+            <div class="space-y-2">
+                <span class="text-xs font-black uppercase tracking-widest text-gray-500 block flex items-center gap-1.5">
+                    <i class="fas fa-eye text-brand-teal"></i> <span>Live Social Media Link Preview (What people will see):</span>
+                </span>
+                
+                <!-- Simulated WhatsApp / Twitter Preview Card -->
+                <div class="bg-gray-50 border-2 border-gray-200 rounded-2xl overflow-hidden shadow-md block hover:border-blue-400 transition">
+                    <div class="h-44 sm:h-52 bg-gradient-to-r from-brand-orange via-brand-yellow to-brand-green relative flex items-center justify-center overflow-hidden">
+                        <!-- We embed the actual high quality og_preview image we generated -->
+                        <img src="og_preview.jpg" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-center justify-center p-4 text-center text-white">
+                            <span class="text-5xl mb-1 animate-bounce">🦚</span>
+                            <h4 class="text-2xl font-black font-kannada tracking-wide drop-shadow-md">ನಮ್ಮ Kannada Tutor - Grade 2</h4>
+                            <span class="bg-gray-900 bg-opacity-80 text-amber-300 text-xs font-black px-3 py-1 rounded-full border border-amber-400 mt-2 shadow">
+                                Designed & Created by Praveen Chaudhary
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-white space-y-1">
+                        <span class="text-[10px] uppercase font-black text-gray-400 tracking-wider block">praveenchaudhary-kannadatutor.netlify.app</span>
+                        <h4 class="text-base font-bold text-gray-900 leading-snug">🌟 Namma Kannada Tutor - Grade 2 • Created by Praveen Chaudhary</h4>
+                        <p class="text-xs text-gray-600 leading-normal">
+                            An expert interactive gamified Kannada learning app for kids. Play Star Quizzes, unlock royal trophies, and build sentences offline!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1-Click Social Sharing Buttons Suite -->
+            <div class="space-y-3">
+                <span class="text-xs font-black uppercase tracking-widest text-gray-500 block text-center">
+                    Share instantly via your favorite app:
+                </span>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <!-- WhatsApp -->
+                    <button onclick="shareOnSocial('whatsapp')" class="bg-[#25D366] hover:bg-[#1EBE5A] text-white font-bold py-3 px-4 rounded-2xl shadow-md flex flex-col items-center justify-center gap-1.5 transform hover:scale-105 transition btn-push">
+                        <i class="fab fa-whatsapp text-3xl"></i>
+                        <span class="text-xs tracking-wide">WhatsApp</span>
+                    </button>
+
+                    <!-- Facebook -->
+                    <button onclick="shareOnSocial('facebook')" class="bg-[#1877F2] hover:bg-[#1464CC] text-white font-bold py-3 px-4 rounded-2xl shadow-md flex flex-col items-center justify-center gap-1.5 transform hover:scale-105 transition btn-push">
+                        <i class="fab fa-facebook text-3xl"></i>
+                        <span class="text-xs tracking-wide">Facebook</span>
+                    </button>
+
+                    <!-- Twitter / X -->
+                    <button onclick="shareOnSocial('twitter')" class="bg-black hover:bg-gray-800 text-white font-bold py-3 px-4 rounded-2xl shadow-md flex flex-col items-center justify-center gap-1.5 transform hover:scale-105 transition btn-push">
+                        <i class="fab fa-x-twitter text-3xl"></i>
+                        <span class="text-xs tracking-wide">Twitter / X</span>
+                    </button>
+
+                    <!-- LinkedIn -->
+                    <button onclick="shareOnSocial('linkedin')" class="bg-[#0A66C2] hover:bg-[#08529E] text-white font-bold py-3 px-4 rounded-2xl shadow-md flex flex-col items-center justify-center gap-1.5 transform hover:scale-105 transition btn-push">
+                        <i class="fab fa-linkedin text-3xl"></i>
+                        <span class="text-xs tracking-wide">LinkedIn</span>
+                    </button>
+
+                    <!-- Telegram -->
+                    <button onclick="shareOnSocial('telegram')" class="bg-[#229ED9] hover:bg-[#1C87BA] text-white font-bold py-3 px-4 rounded-2xl shadow-md flex flex-col items-center justify-center gap-1.5 transform hover:scale-105 transition btn-push">
+                        <i class="fab fa-telegram text-3xl"></i>
+                        <span class="text-xs tracking-wide">Telegram</span>
+                    </button>
+
+                    <!-- Email -->
+                    <button onclick="shareOnSocial('email')" class="bg-[#EA4335] hover:bg-[#D33628] text-white font-bold py-3 px-4 rounded-2xl shadow-md flex flex-col items-center justify-center gap-1.5 transform hover:scale-105 transition btn-push">
+                        <i class="fas fa-envelope text-3xl"></i>
+                        <span class="text-xs tracking-wide">Email</span>
+                    </button>
+
+                    <!-- Device Web Share API -->
+                    <button onclick="shareOnSocial('native')" class="bg-brand-teal hover:bg-teal-600 text-white font-bold py-3 px-4 rounded-2xl shadow-md flex flex-col items-center justify-center gap-1.5 transform hover:scale-105 transition btn-push">
+                        <i class="fas fa-mobile-alt text-3xl"></i>
+                        <span class="text-xs tracking-wide">OS Share</span>
+                    </button>
+
+                    <!-- Copy Branded Link / Text -->
+                    <button onclick="shareOnSocial('copy')" id="btn-copy-share" class="bg-gray-800 hover:bg-gray-900 text-amber-300 border border-amber-400 font-bold py-3 px-4 rounded-2xl shadow-md flex flex-col items-center justify-center gap-1.5 transform hover:scale-105 transition btn-push">
+                        <i class="fas fa-copy text-2xl text-amber-400"></i>
+                        <span class="text-xs tracking-wide" id="copy-share-txt">Copy Share</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Free Hosting Tip -->
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-2xl text-xs text-blue-900 font-medium">
+                <strong class="font-black uppercase block mb-1">💡 Pro Tip for WhatsApp Previews:</strong>
+                If you send this standalone HTML file directly via email or WhatsApp, your recipients can launch it instantly offline! To make the glowing visual OpenGraph thumbnail render automatically in their chat windows, simply host this file for free on Netlify, Vercel, or GitHub Pages.
+            </div>
+
+            <div class="text-center pt-2">
+                <button onclick="toggleShareModal()" class="bg-gray-900 hover:bg-black text-amber-300 font-black px-8 py-3 rounded-2xl shadow-lg btn-push text-sm border border-amber-400 inline-block">
+                    Excellent, Done! 👍
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation & Application Panels -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 flex flex-col gap-6">
+
+        <!-- Navigation Tabs -->
+        <nav class="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+            <button onclick="switchTab('varnamale')" class="tab-btn active font-kannada font-bold text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-brand-orange text-brand-orange hover:bg-orange-50">
+                <span class="text-lg">📖</span>
+                <span>ವರ್ಣಮಾಲೆ (Alphabets)</span>
+            </button>
+            <button onclick="switchTab('numbers')" class="tab-btn font-kannada font-bold text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-brand-orange text-brand-orange hover:bg-orange-50">
+                <span class="text-lg">🔢</span>
+                <span>ಸಂಖ್ಯೆಗಳು (Numbers 1-20)</span>
+            </button>
+            <button onclick="switchTab('words')" class="tab-btn font-kannada font-bold text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-brand-orange text-brand-orange hover:bg-orange-50">
+                <span class="text-lg">🎴</span>
+                <span>ಪದಗಳು (Vocabulary)</span>
+            </button>
+            <button onclick="switchTab('games')" class="tab-btn font-kannada font-bold text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-brand-orange text-brand-orange hover:bg-orange-50">
+                <span class="text-lg animate-bounce">🎮</span>
+                <span>ಆಟಗಳು & Star Quizzes</span>
+            </button>
+            <button onclick="switchTab('rhymes')" class="tab-btn font-kannada font-bold text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-brand-orange text-brand-orange hover:bg-orange-50">
+                <span class="text-lg">🎶</span>
+                <span>ಪದ್ಯಗಳು (NPS Rhymes)</span>
+            </button>
+            <button onclick="switchTab('buddy')" class="tab-btn font-kannada font-bold text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-brand-orange text-brand-orange hover:bg-orange-50">
+                <span class="text-lg">🤖</span>
+                <span>Ask Buddy & Builder</span>
+            </button>
+            <button onclick="switchTab('trophy')" class="tab-btn bg-yellow-100 font-kannada font-black text-sm sm:text-base px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all border-2 border-amber-400 text-amber-800 hover:bg-yellow-200 shadow-md">
+                <span class="text-lg">🏆</span>
+                <span>My Trophy Room</span>
+            </button>
+        </nav>
+
+        <!-- Architect Cheer Box -->
+        <div class="bg-white rounded-3xl p-4 sm:p-5 shadow-md flex flex-wrap items-center justify-between gap-4 border-2 border-brand-yellow relative">
+            <div class="flex items-center space-x-4">
+                <div class="text-4xl bg-yellow-100 p-3 rounded-2xl animate-bounce-slow flex-shrink-0">
+                    👑
+                </div>
+                <div>
+                    <h3 class="font-kannada font-bold text-brand-orange text-lg flex items-center gap-2">
+                        <span>Praveen Chaudhary says:</span>
+                        <span class="text-[10px] bg-brand-orange text-white px-2 py-0.5 rounded-md uppercase tracking-wider font-sans font-black shadow">Software Architect</span>
+                    </h3>
+                    <p id="mascot-text" class="text-gray-700 font-medium text-sm sm:text-base">
+                        ನಮಸ್ಕಾರ! (Namaskara!) Click any card, finish a quiz, or guess a balloon to win Golden Stars ⭐ and unlock royal trophies!
+                    </p>
+                </div>
+            </div>
+            <div class="flex-shrink-0 flex items-center gap-2">
+                <button onclick="toggleShareModal()" class="text-xs bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 text-white font-black px-4 py-2.5 rounded-2xl shadow-md flex items-center btn-push">
+                    <i class="fas fa-share-alt mr-1.5 text-yellow-300"></i> Spread The App
+                </button>
+                <button onclick="toggleCopyrightModal()" class="text-xs bg-gray-900 hover:bg-black text-amber-300 font-black px-4 py-2.5 rounded-2xl border border-amber-400 shadow flex items-center btn-push">
+                    <i class="fas fa-crown mr-1.5 text-amber-400 text-sm"></i> By Praveen Chaudhary
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= SECTION 1: VARNAMALE ================= -->
+        <section id="sec-varnamale" class="tab-content block space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-4 bg-brand-teal bg-opacity-10 p-4 rounded-2xl border border-brand-teal border-opacity-30">
+                <div>
+                    <h2 class="text-2xl font-kannada font-bold text-gray-800 flex items-center gap-2">
+                        <span>ವರ್ಣಮಾಲೆ (Kannada Alphabet)</span>
+                        <span class="text-xs bg-brand-teal text-white px-2.5 py-0.5 rounded-full font-sans font-bold">Earn +1 ⭐ per card</span>
+                    </h2>
+                    <p class="text-sm text-gray-600">Vowels (ಸ್ವರಗಳು - Swaragalu) and Consonants (ವ್ಯಂಜನಗಳು - Vyanjanagalu)</p>
+                </div>
+                <div class="flex space-x-2">
+                    <button onclick="filterVarnamale('vowels')" id="btn-vowels" class="bg-brand-teal text-white font-bold px-4 py-2 rounded-xl text-sm shadow btn-push">
+                        ಸ್ವರಗಳು (Vowels)
+                    </button>
+                    <button onclick="filterVarnamale('consonants')" id="btn-consonants" class="bg-white text-brand-teal border border-brand-teal font-bold px-4 py-2 rounded-xl text-sm shadow hover:bg-teal-50 btn-push">
+                        ವ್ಯಂಜನಗಳು (Consonants)
+                    </button>
+                </div>
+            </div>
+
+            <div id="vowels-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4"></div>
+            <div id="consonants-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 hidden"></div>
+        </section>
+
+        <!-- ================= SECTION 2: NUMBERS ================= -->
+        <section id="sec-numbers" class="tab-content hidden space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-4 bg-brand-yellow bg-opacity-10 p-4 rounded-2xl border border-brand-yellow border-opacity-40">
+                <div>
+                    <h2 class="text-2xl font-kannada font-bold text-gray-800 flex items-center gap-2">
+                        <span>ಕನ್ನಡ ಸಂಖ್ಯೆಗಳು (Numbers 1 to 20)</span>
+                        <span class="text-xs bg-brand-yellow text-gray-900 px-2.5 py-0.5 rounded-full font-sans font-black">Earn +1 ⭐ per number</span>
+                    </h2>
+                    <p class="text-sm text-gray-600">Learn to count in Kannada with numbers, spellings, and colorful stars!</p>
+                </div>
+                <button onclick="speakAllNumbers()" class="bg-brand-yellow hover:bg-amber-400 text-gray-900 font-bold px-4 py-2 rounded-xl text-sm shadow flex items-center gap-2 btn-push">
+                    <i class="fas fa-play text-xs"></i> Auto-Play 1 to 20
+                </button>
+            </div>
+
+            <div id="numbers-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4"></div>
+        </section>
+
+        <!-- ================= SECTION 3: VOCABULARY FLASHCARDS ================= -->
+        <section id="sec-words" class="tab-content hidden space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-4 bg-brand-purple bg-opacity-10 p-4 rounded-2xl border border-brand-purple border-opacity-30">
+                <div>
+                    <h2 class="text-2xl font-kannada font-bold text-gray-800 flex items-center gap-2">
+                        <span>ಪದಗಳ ಭಂಡಾರ (Vocabulary Flashcards)</span>
+                        <span class="text-xs bg-brand-purple text-white px-2.5 py-0.5 rounded-full font-sans font-bold">Earn +2 ⭐ on flip</span>
+                    </h2>
+                    <p class="text-sm text-gray-600">Click any picture card to flip it over and learn its secret spoken Kannada name!</p>
+                </div>
+                <div class="flex flex-wrap gap-1.5 sm:gap-2" id="word-filters">
+                    <button onclick="filterWords('All')" class="word-filter-btn active bg-brand-purple text-white px-3 py-1.5 rounded-xl font-bold text-xs shadow">All</button>
+                    <button onclick="filterWords('Fruits')" class="word-filter-btn bg-white text-gray-700 hover:bg-purple-50 px-3 py-1.5 rounded-xl font-bold text-xs border border-purple-200 shadow">🍎 Fruits</button>
+                    <button onclick="filterWords('Animals')" class="word-filter-btn bg-white text-gray-700 hover:bg-purple-50 px-3 py-1.5 rounded-xl font-bold text-xs border border-purple-200 shadow">🐶 Animals</button>
+                    <button onclick="filterWords('Colors')" class="word-filter-btn bg-white text-gray-700 hover:bg-purple-50 px-3 py-1.5 rounded-xl font-bold text-xs border border-purple-200 shadow">🎨 Colors</button>
+                    <button onclick="filterWords('Family')" class="word-filter-btn bg-white text-gray-700 hover:bg-purple-50 px-3 py-1.5 rounded-xl font-bold text-xs border border-purple-200 shadow">👪 Family</button>
+                    <button onclick="filterWords('Phrases')" class="word-filter-btn bg-white text-gray-700 hover:bg-purple-50 px-3 py-1.5 rounded-xl font-bold text-xs border border-purple-200 shadow">👋 Phrases</button>
+                </div>
+            </div>
+
+            <div id="flashcards-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+        </section>
+
+        <!-- ================= SECTION 4: GAMES & STAR QUIZZES ================= -->
+        <section id="sec-games" class="tab-content hidden space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-4 bg-brand-orange bg-opacity-10 p-4 rounded-2xl border border-brand-orange border-opacity-30">
+                <div>
+                    <h2 class="text-2xl font-kannada font-bold text-gray-800">ಆಟಗಳು (Interactive Learning Games)</h2>
+                    <p class="text-sm text-gray-600">Enjoy simple picture quizzes, balloon pop games, and pair matches to win endless Golden Stars!</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="switchGameMode('simple_quiz')" id="btn-mode-simple" class="bg-brand-orange text-white font-bold px-4 py-2 rounded-xl text-sm shadow btn-push flex items-center gap-1.5">
+                        <span class="text-lg">👶</span> <span>Simple Picture Quiz</span>
+                    </button>
+                    <button onclick="switchGameMode('balloon_pop')" id="btn-mode-balloon" class="bg-white text-brand-orange border border-brand-orange font-bold px-4 py-2 rounded-xl text-sm shadow hover:bg-orange-50 btn-push flex items-center gap-1.5">
+                        <span class="text-lg">🎈</span> <span>Word Balloon Pop</span>
+                    </button>
+                    <button onclick="switchGameMode('match')" id="btn-mode-match" class="bg-white text-brand-orange border border-brand-orange font-bold px-4 py-2 rounded-xl text-sm shadow hover:bg-orange-50 btn-push flex items-center gap-1.5">
+                        <span class="text-lg">🔗</span> <span>Match the Pairs</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Game 1: New Ultra-Simple Picture Quiz -->
+            <div id="game-simple-container" class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-4 border-orange-200 max-w-3xl mx-auto flex flex-col items-center relative">
+                <div class="w-full flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-3xl" id="sq-icon">🦁</span>
+                        <div>
+                            <span class="text-xs text-gray-400 font-bold block uppercase tracking-wider" id="sq-progress">Question 1 / 25</span>
+                            <span class="text-sm font-black font-kannada text-brand-orange" id="sq-cat">Topic: Friendly Animals</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-gradient-to-r from-yellow-300 to-amber-400 px-4 py-1.5 rounded-2xl text-gray-900 font-black shadow">
+                        <span>⭐ Earned:</span>
+                        <span id="sq-score" class="text-xl">0</span>
+                    </div>
+                </div>
+
+                <div id="sq-question-area" class="w-full text-center py-4">
+                    <h3 id="sq-question" class="text-2xl sm:text-3xl font-black font-kannada text-gray-800 mb-8 leading-snug">
+                        Which picture is 'Mother' (ಅಮ್ಮ)?
+                    </h3>
+                    <div id="sq-choices" class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto"></div>
+                </div>
+
+                <div id="sq-feedback" class="mt-6 text-center min-h-[50px] flex items-center justify-center w-full"></div>
+            </div>
+
+            <!-- Game 2: Word Balloon Pop -->
+            <div id="game-balloon-container" class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-4 border-orange-200 max-w-4xl mx-auto hidden flex flex-col items-center text-center">
+                <div class="w-full flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
+                    <div>
+                        <h3 class="text-2xl font-black font-kannada text-brand-purple">🎈 Pop the Correct Word Balloon!</h3>
+                        <p class="text-xs font-bold text-gray-500">Listen to Praveen Guru, then click the right balloon to explode it!</p>
+                    </div>
+                    <button onclick="initBalloonPop()" class="bg-brand-teal hover:bg-teal-500 text-white font-bold text-xs px-4 py-2 rounded-xl btn-push shadow flex items-center gap-1">
+                        <i class="fas fa-redo"></i> <span>Next Balloons</span>
+                    </button>
+                </div>
+
+                <div class="bg-gradient-to-b from-blue-50 to-indigo-50 w-full py-8 px-4 rounded-3xl border-2 border-dashed border-blue-200 relative min-h-[360px] flex flex-col items-center justify-center">
+                    <div class="bg-white px-6 py-3 rounded-2xl shadow-lg border-2 border-brand-teal mb-8 transform -rotate-1">
+                        <span class="text-xs uppercase text-gray-400 font-bold block">Pop the balloon matching:</span>
+                        <h4 id="bp-target" class="text-3xl sm:text-4xl font-black font-kannada text-brand-orange">ಆನೆ (Elephant)</h4>
+                    </div>
+                    <div id="bp-area" class="flex flex-wrap items-center justify-center gap-6 sm:gap-10 w-full"></div>
+                </div>
+
+                <div id="bp-success" class="mt-6 font-bold text-xl text-brand-green animate-bounce hidden">
+                    🎉 Splendid Balloon Pop! You collected +15 Golden Stars! ⭐
+                </div>
+            </div>
+
+            <!-- Game 3: Match the Pairs -->
+            <div id="game-match-container" class="bg-white rounded-3xl p-6 shadow-xl border-4 border-orange-200 max-w-4xl mx-auto hidden">
+                <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 font-kannada">Match Kannada Word to English Meaning</h3>
+                        <p class="text-xs text-gray-500">Click a card on the left, then click its match on the right!</p>
+                    </div>
+                    <button onclick="initMatchGame()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold text-xs px-3 py-1.5 rounded-xl btn-push shadow">
+                        <i class="fas fa-sync mr-1"></i> Shuffle New
+                    </button>
+                </div>
+
+                <div class="relative flex justify-between items-stretch gap-8 min-h-[350px]" id="match-game-area">
+                    <canvas id="match-canvas"></canvas>
+                    <div id="match-left" class="flex-1 flex flex-col justify-around gap-4 z-10"></div>
+                    <div id="match-right" class="flex-1 flex flex-col justify-around gap-4 z-10"></div>
+                </div>
+
+                <div id="match-success-msg" class="mt-6 text-center hidden">
+                    <p class="text-xl font-bold text-brand-green animate-bounce">🎉 Woohoo! All pairs matched perfectly! +25 Golden Stars! ⭐</p>
+                    <button onclick="initMatchGame()" class="mt-3 bg-brand-orange text-white font-bold px-6 py-2 rounded-2xl shadow hover:bg-orange-600 btn-push">Play Again</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 5: RHYMES ================= -->
+        <section id="sec-rhymes" class="tab-content hidden space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-4 bg-brand-pink bg-opacity-10 p-4 rounded-2xl border border-brand-pink border-opacity-30">
+                <div>
+                    <h2 class="text-2xl font-kannada font-bold text-gray-800 flex items-center gap-2">
+                        <span>ಪದ್ಯಗಳು (NPS Grade 2 Rhymes)</span>
+                        <span class="text-xs bg-brand-pink text-white px-2.5 py-0.5 rounded-full font-sans font-bold">Earn +5 ⭐ per song</span>
+                    </h2>
+                    <p class="text-sm text-gray-600">Sing along with famous children's songs from your textbook!</p>
+                </div>
+                <div class="flex space-x-2">
+                    <button onclick="selectRhyme(0)" id="btn-rhyme-0" class="bg-brand-pink text-white font-bold px-3 py-2 rounded-xl text-xs sm:text-sm shadow btn-push">🐶 Nayi Mari</button>
+                    <button onclick="selectRhyme(1)" id="btn-rhyme-1" class="bg-white text-brand-pink border border-brand-pink font-bold px-3 py-2 rounded-xl text-xs sm:text-sm shadow hover:bg-pink-50 btn-push">🎺 Tutturi</button>
+                    <button onclick="selectRhyme(2)" id="btn-rhyme-2" class="bg-white text-brand-pink border border-brand-pink font-bold px-3 py-2 rounded-xl text-xs sm:text-sm shadow hover:bg-pink-50 btn-push">🙏 Prarthane</button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-lg border-2 border-pink-200 max-w-4xl mx-auto flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/3 flex flex-col items-center text-center justify-between bg-pink-50 p-6 rounded-2xl border border-pink-100">
+                    <div>
+                        <div id="rhyme-icon" class="text-6xl mb-4 animate-bounce-slow">🐶</div>
+                        <h3 id="rhyme-title-kn" class="text-2xl font-black font-kannada text-brand-pink">ನಾಯಿ ಮರಿ</h3>
+                        <h4 id="rhyme-title-en" class="text-base font-bold text-gray-700 mb-3">Nayi Mari (Little Puppy)</h4>
+                        <p id="rhyme-meaning" class="text-xs text-gray-600 italic bg-white p-3 rounded-xl shadow-inner mb-4"></p>
+                    </div>
+                    <button onclick="reciteCurrentRhyme()" class="w-full bg-brand-green hover:bg-green-600 text-white font-black py-3 rounded-2xl shadow-lg flex items-center justify-center gap-2 btn-push">
+                        <i class="fas fa-volume-up text-lg"></i> Read Aloud & Win +10 ⭐
+                    </button>
+                </div>
+
+                <div class="md:w-2/3 flex flex-col justify-center">
+                    <div class="border-b pb-2 mb-4 flex justify-between items-center">
+                        <span class="font-bold text-xs uppercase text-gray-400 tracking-wider">Line by line lyrics</span>
+                        <span class="text-xs text-brand-teal font-semibold">Click any line to listen!</span>
+                    </div>
+                    <div id="rhyme-lyrics-container" class="space-y-3 max-h-[400px] overflow-y-auto pr-2"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 6: ASK BUDDY & SENTENCE BUILDER ================= -->
+        <section id="sec-buddy" class="tab-content hidden space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-4 bg-blue-500 bg-opacity-10 p-4 rounded-2xl border border-blue-500 border-opacity-30">
+                <div>
+                    <h2 class="text-2xl font-kannada font-bold text-gray-800">🤖 Ask Guru Buddy & Sentence Helper</h2>
+                    <p class="text-sm text-gray-600">Search any Grade 2 word or build your own conversational Kannada sentences to win ⭐!</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Instant Dictionary Search -->
+                <div class="bg-white rounded-3xl p-6 shadow-lg border-2 border-blue-200 flex flex-col">
+                    <h3 class="text-xl font-bold font-kannada text-brand-teal mb-2 flex items-center gap-2">
+                        <i class="fas fa-search"></i> Instant Word Finder
+                    </h3>
+                    <p class="text-xs text-gray-500 mb-4">Type any English or Kannada word (e.g. apple, dog, red, amma, cat)...</p>
+
+                    <div class="relative mb-4">
+                        <input type="text" id="dict-search-input" oninput="searchDictionary()" placeholder="Search from 150+ words..." class="w-full bg-gray-50 border-2 border-gray-200 rounded-2xl px-4 py-3 pl-11 text-gray-800 font-medium focus:border-brand-teal focus:bg-white outline-none transition">
+                        <i class="fas fa-search absolute left-4 top-4 text-gray-400"></i>
+                        <button onclick="document.getElementById('dict-search-input').value=''; searchDictionary();" class="absolute right-4 top-3.5 text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times-circle"></i>
+                        </button>
+                    </div>
+
+                    <div id="dict-results" class="flex-grow bg-gray-50 rounded-2xl p-4 max-h-[300px] overflow-y-auto space-y-2.5 border border-gray-100"></div>
+                </div>
+
+                <!-- Custom Sentence Builder -->
+                <div class="bg-white rounded-3xl p-6 shadow-lg border-2 border-blue-200 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold font-kannada text-brand-purple mb-2 flex items-center gap-2">
+                            <i class="fas fa-tools"></i> Mini Sentence Builder
+                        </h3>
+                        <p class="text-xs text-gray-500 mb-4">Combine words to create correct Kannada sentences for classroom and home!</p>
+
+                        <div class="space-y-4 bg-purple-50 p-4 rounded-2xl border border-purple-100">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">1. Subject (Who?)</label>
+                                <select id="sb-subj" onchange="updateSentence()" class="w-full bg-white border border-purple-200 rounded-xl p-2.5 text-sm font-bold text-gray-800 outline-none">
+                                    <option value="nanu" data-kn="ನಾನು" data-en="I">ನಾನು (Naanu - I)</option>
+                                    <option value="ninu" data-kn="ನೀನು" data-en="You font kid">ನೀನು (Neenu - You)</option>
+                                    <option value="avani" data-kn="ಅವನು" data-en="He">ಅವನು (Avanu - He)</option>
+                                    <option value="avalu" data-kn="ಅವಳು" data-en="She">ಅವಳು (Avalu - She)</option>
+                                    <option value="amma" data-kn="ಅಮ್ಮ" data-en="Mother">ಅಮ್ಮ (Amma - Mother)</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">2. Object (What?)</label>
+                                <select id="sb-obj" onchange="updateSentence()" class="w-full bg-white border border-purple-200 rounded-xl p-2.5 text-sm font-bold text-gray-800 outline-none">
+                                    <option value="hannu" data-kn="ಹಣ್ಣು" data-en="fruit">ಹಣ್ಣು (Hannu - Fruit)</option>
+                                    <option value="oota" data-kn="ಊಟ" data-en="meals">ಊಟ (Oota - Meals)</option>
+                                    <option value="haalu" data-kn="ಹಾಲು" data-en="milk">ಹಾಲು (Haalu - Milk)</option>
+                                    <option value="pustaka" data-kn="ಪುಸ್ತಕ" data-en="book">ಪುಸ್ತಕ (Pustaka - Book)</option>
+                                    <option value="shaale" data-kn="ಶಾಲೆಗೆ" data-en="to school">ಶಾಲೆಗೆ (Shaalege - To School)</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">3. Action (Verb)</label>
+                                <select id="sb-verb" onchange="updateSentence()" class="w-full bg-white border border-purple-200 rounded-xl p-2.5 text-sm font-bold text-gray-800 outline-none">
+                                    <option value="tinnu" data-kn="ತಿನ್ನುತ್ತೇನೆ" data-en="eat">ತಿನ್ನುತ್ತೇನೆ (Tinnuttene - Eat)</option>
+                                    <option value="kudi" data-kn="ಕುಡಿಯುತ್ತೇನೆ" data-en="drink">ಕುಡಿಯುತ್ತೇನೆ (Kudiyuttene - Drink)</option>
+                                    <option value="odu" data-kn="ಓದುತ್ತೇನೆ" data-en="read">ಓದುತ್ತೇನೆ (Oaduttene - Read)</option>
+                                    <option value="hogu" data-kn="ಹೋಗುತ್ತೇನೆ" data-en="go">ಹೋಗುತ್ತೇನೆ (Hoaguttene - Go)</option>
+                                    <option value="nodu" data-kn="ನೋಡುತ್ತೇನೆ" data-en="see/watch">ನೋಡುತ್ತೇನೆ (Noaduttene - See/Watch)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-5 rounded-2xl shadow-lg flex items-center justify-between">
+                        <div>
+                            <p class="text-xs text-purple-200 font-semibold uppercase tracking-wider mb-1">Your Built Sentence:</p>
+                            <h4 id="sb-out-kn" class="text-2xl font-black font-kannada">ನಾನು ಹಣ್ಣು ತಿನ್ನುತ್ತೇನೆ</h4>
+                            <p id="sb-out-en" class="text-sm font-medium text-purple-100">Naanu hannu tinnuttene (I eat fruit)</p>
+                        </div>
+                        <button onclick="speakBuiltSentence()" class="bg-yellow-400 hover:bg-yellow-300 text-purple-900 font-black p-4 rounded-2xl shadow btn-push flex-shrink-0" title="Listen Sentence">
+                            <i class="fas fa-volume-up text-2xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 7: MY TROPHY ROOM ================= -->
+        <section id="sec-trophy" class="tab-content hidden space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-4 bg-gradient-to-r from-amber-400 to-yellow-500 p-6 rounded-3xl text-gray-900 shadow-xl border-4 border-gray-900">
+                <div class="flex items-center space-x-4">
+                    <span class="text-6xl animate-bounce">🏆</span>
+                    <div>
+                        <h2 class="text-3xl font-black font-kannada">ನನ್ನ ಬಹುಮಾನಗಳು (My Royal Trophies)</h2>
+                        <p class="text-sm font-bold text-gray-800">Collect Golden Stars ⭐ by playing games and unlock legendary royal prizes from Praveen Guru!</p>
+                    </div>
+                </div>
+                <div class="bg-gray-900 text-amber-300 px-6 py-3 rounded-2xl border-2 border-white text-center shadow-inner">
+                    <span class="text-xs uppercase font-bold tracking-widest block text-gray-400">Total Unlocked Stars:</span>
+                    <span id="trophy-star-count" class="text-4xl font-black font-kannada">0 ⭐</span>
+                </div>
+            </div>
+
+            <!-- Trophies Grid -->
+            <div id="trophies-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+        </section>
+
+    </main>
+
+    <!-- Visual Pronunciation Fixed Banner / Toast -->
+    <div id="pronounce-toast" class="fixed bottom-12 left-0 right-0 bg-black bg-opacity-95 text-white py-3 px-6 shadow-2xl backdrop-blur-md border-t-4 border-brand-yellow flex flex-wrap items-center justify-between gap-3 z-40 transform translate-y-full transition-transform duration-300">
+        <div class="flex items-center space-x-3">
+            <span class="text-3xl animate-bounce">📢</span>
+            <div>
+                <span class="text-[10px] uppercase text-yellow-300 font-bold tracking-widest block">How to pronounce in Kannada:</span>
+                <div class="text-xl sm:text-2xl font-black font-kannada tracking-wide flex items-center gap-2">
+                    <span id="toast-kn" class="text-brand-yellow">ನಮಸ್ಕಾರ</span>
+                    <span class="text-white text-base font-normal">→</span>
+                    <span id="toast-en" class="text-green-300 font-sans font-bold text-lg sm:text-xl">"Namaskara"</span>
+                </div>
+                <div id="toast-mean" class="text-xs text-gray-300 font-medium">Meanings / Context here</div>
+            </div>
+        </div>
+        <div class="flex items-center space-x-3">
+            <button onclick="repeatLastAudio()" class="bg-brand-yellow text-gray-900 font-black text-xs px-4 py-2 rounded-xl shadow btn-push flex items-center gap-1.5">
+                <i class="fas fa-volume-up text-base"></i> <span>Play Sound Again</span>
+            </button>
+            <button onclick="closePronounceToast()" class="text-gray-400 hover:text-white text-xl p-1">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Legal Information Modal -->
+    <div id="copyright-modal" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border-4 border-gray-900 space-y-4 text-gray-800 relative z-50">
+            <button onclick="toggleCopyrightModal()" class="absolute right-6 top-6 text-gray-400 hover:text-gray-600 text-2xl">
+                <i class="fas fa-times-circle"></i>
+            </button>
+            <div class="flex items-center space-x-3 text-gray-900 font-black text-2xl border-b pb-4 border-gray-100">
+                <span class="text-4xl">👑</span>
+                <div>
+                    <h2 class="text-xl sm:text-2xl">Created & Owned by Praveen Chaudhary</h2>
+                    <p class="text-xs font-bold text-brand-orange uppercase tracking-widest font-sans">Official Copyright & Licensing Information</p>
+                </div>
+            </div>
+            <div class="space-y-3 text-xs leading-relaxed text-gray-700 bg-gray-50 p-5 rounded-2xl border border-gray-200 shadow-inner">
+                <p><strong class="text-gray-900 uppercase">1. Architect & Authorship:</strong> E-Learning Application titled <em>"🌟 Namma Kannada Tutor - Grade 2 (NPS ITPL)"</em> is independently coded, architected, and authored entirely by <strong class="text-brand-orange text-sm font-black underline">Praveen Chaudhary</strong>.</p>
+                <p><strong class="text-gray-900 uppercase">2. Permitted Educational Use:</strong> Free for personal educational usage by students and parents. <strong class="text-gray-900 font-bold underline">Condition: Praveen Chaudhary's Creator attribution must remain prominently intact and unedited.</strong></p>
+                <div class="bg-red-50 border-l-4 border-red-500 p-3.5 text-red-900 font-medium rounded-r-xl space-y-1">
+                    <strong class="text-red-700 font-black uppercase block text-sm">⚠️ Unauthorized Use & Copyright Infringement Prohibited:</strong>
+                    All HTML structures, gamified learning algorithms, star reward mechanisms, and audio-matching modules are the exclusive intellectual property of Praveen Chaudhary.
+                    <br>• Violations such as removing Praveen Chaudhary's watermark banner, commercial reselling, or re-hosting on monetized platforms will result in prompt legal infringement prosecution under IP and Copyright Acts.
+                </div>
+            </div>
+            <div class="pt-2 flex flex-wrap items-center justify-between gap-3 border-t pt-4 border-gray-100">
+                <div class="text-[11px] font-bold text-gray-500 flex items-center gap-2">
+                    <i class="fas fa-shield-alt text-brand-green text-lg"></i>
+                    <span>IP Protected • © 2026 Praveen Chaudhary</span>
+                </div>
+                <button onclick="toggleCopyrightModal()" class="bg-gray-900 hover:bg-black text-amber-300 font-black px-8 py-2.5 rounded-2xl shadow-lg btn-push text-sm border border-amber-400">
+                    I Agree & Acknowledge
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Settings Modal -->
+    <div id="audio-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border-4 border-brand-yellow space-y-4 text-gray-800 relative z-50">
+            <button onclick="toggleAudioModal()" class="absolute right-6 top-6 text-gray-400 hover:text-gray-600 text-2xl">
+                <i class="fas fa-times-circle"></i>
+            </button>
+            <div class="flex items-center space-x-3 text-brand-orange font-kannada font-black text-2xl">
+                <i class="fas fa-headphones-alt text-brand-teal text-3xl"></i>
+                <h2>Sound & Pronunciation Helper</h2>
+            </div>
+            <p class="text-xs text-gray-600 leading-relaxed">
+                If browser audio sounds unusual or is restricted by office IT policies, configure it perfectly here:
+            </p>
+            <div class="space-y-3 bg-gray-50 p-4 rounded-2xl border border-gray-200 text-xs">
+                <div class="flex justify-between items-center py-1 border-b border-gray-200">
+                    <span class="font-bold text-gray-700">1. Browser Game Sound Effects:</span>
+                    <button onclick="testGameSound('win'); speakKannada('ಶಬ್ದ ಸರಿ ಇದೆ', 'Sound is working');" class="bg-brand-green text-white font-bold px-3 py-1 rounded-xl shadow btn-push">
+                        Test Ding Sound 🔔
+                    </button>
+                </div>
+                <div class="flex justify-between items-center py-1 border-b border-gray-200">
+                    <span class="font-bold text-gray-700">2. Select Voice Engine:</span>
+                    <select id="voice-selector" onchange="testSelectedVoice()" class="bg-white border border-gray-300 rounded-xl px-2.5 py-1.5 font-bold text-brand-purple outline-none max-w-[200px]">
+                        <option value="auto">Automatic (Best)</option>
+                    </select>
+                </div>
+                <div class="py-1">
+                    <span class="font-bold text-gray-700 block mb-1">3. Muted speakers?</span>
+                    <p class="text-gray-500 italic">Every time you click any card, an instant <span class="font-bold text-brand-orange">Visual Phonetic Banner</span> pops up at the bottom of your screen to show exactly how to pronounce it!</p>
+                </div>
+            </div>
+            <div class="pt-2 flex justify-center">
+                <button onclick="toggleAudioModal()" class="bg-brand-orange hover:bg-orange-600 text-white font-black px-8 py-2.5 rounded-2xl shadow-lg btn-push text-sm">
+                    Awesome, Got It! 👍
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sticky Bottom Creator Bar & Sharing Suite -->
+    <div class="fixed bottom-0 left-0 right-0 bg-gray-900 border-t-2 border-amber-400 text-white py-2 px-4 text-center z-50 shadow-2xl flex flex-wrap items-center justify-between gap-2 text-xs">
+        <div class="flex items-center space-x-2 font-bold text-amber-300">
+            <span class="text-base">👑</span>
+            <span class="tracking-widest uppercase">By Praveen Chaudhary</span>
+            <span class="text-gray-500 hidden md:inline">|</span>
+            <span class="text-gray-300 font-normal hidden md:inline">For NPS ITPL Grade 2</span>
+        </div>
+        
+        <div class="flex items-center space-x-3 text-[11px]">
+            <button onclick="toggleShareModal()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 text-white font-black px-3 py-1 rounded-lg uppercase tracking-wider shadow btn-push flex items-center gap-1">
+                <i class="fas fa-share-alt text-yellow-300"></i> <span>Share</span>
+            </button>
+            <button onclick="toggleCopyrightModal()" class="bg-amber-400 hover:bg-amber-300 text-gray-900 font-black px-3 py-1 rounded-lg uppercase tracking-wider shadow btn-push">
+                ⚖️ Copyright Info
+            </button>
+        </div>
+    </div>
+
+    <!-- Actual Fully Populated Clean JS Implementation -->
+    <script>
+        /* ================= STATE, STARS & REWARDS LOGIC ================= */
+        let currentTab = 'varnamale';
+        let lastSpokenKn = "ನಮಸ್ಕಾರ";
+        let lastSpokenEn = "Namaskara";
+        let lastSpokenMean = "Hello / Welcome";
+        let toastTimeout = null;
+
+        // Magic Stars persistent state
+        let magicStars = parseInt(localStorage.getItem('nps_kannada_stars')) || 0;
+
+        function addStars(count) {
+            magicStars += count;
+            localStorage.setItem('nps_kannada_stars', magicStars);
+            
+            const hCount = document.getElementById('header-star-count');
+            const tCount = document.getElementById('trophy-star-count');
+            if (hCount) hCount.innerText = magicStars;
+            if (tCount) tCount.innerText = `${magicStars} ⭐`;
+
+            renderTrophies();
+        }
+
+        // Trophies Data
+        const trophiesList = [
+            { req: 5, icon: "🎈", titleKn: "ಬಲೂನು ಬಹುಮಾನ", titleEn: "Magic NPS Balloon", desc: "Awarded for winning your first 5 magic stars!" },
+            { req: 20, icon: "🍦", titleKn: "ಐಸ್ ಕ್ರೀಮ್", titleEn: "Sweet Ice Cream", desc: "Collected 20 golden stars for excellent reading!" },
+            { req: 50, icon: "🐶", titleKn: "ನಾಯಿ ಮರಿ", titleEn: "Loyal Puppy Buddy", desc: "Unlocked the faithful NPS Puppy for reaching 50 stars!" },
+            { req: 100, icon: "👑", titleKn: "ಕನ್ನಡ ಯುವರಾಜ", titleEn: "Royal Kannada Prince", desc: "A magnificent crown for scoring 100 Golden Stars!" },
+            { req: 150, icon: "🐯", titleKn: "ರಾಜ ಹುಲಿ", titleEn: "Royal ITPL Tiger", desc: "The mighty Tiger shield for true Kannada dedication!" },
+            { req: 250, icon: "🦚", titleKn: "ಸರಸ್ವತಿ ನವಿಲು", titleEn: "Peacock Scholar", desc: "The divine Peacock of Wisdom for reaching 250 stars!" },
+            { req: 400, icon: "🐘", titleKn: "ಗಜರಾಜ", titleEn: "Mighty Gajaraja", desc: "The unbreakable Elephant Trophy for 400 points!" },
+            { req: 600, icon: "🌟", titleKn: "ಕನ್ನಡ ಪಂಡಿತ", titleEn: "Praveen Guru Trophy", desc: "The ultimate Grand Master Trophy authored by Praveen Chaudhary!" }
+        ];
+
+        function renderTrophies() {
+            const grid = document.getElementById('trophies-grid');
+            if (!grid) return;
+
+            grid.innerHTML = trophiesList.map(t => {
+                const isUnlocked = magicStars >= t.req;
+                return `
+                    <div class="bg-white rounded-3xl p-6 border-4 ${isUnlocked ? 'border-amber-400 shadow-xl transform hover:-translate-y-2' : 'border-gray-200 opacity-60'} transition flex flex-col items-center text-center justify-between min-h-[220px] relative">
+                        <span class="absolute top-4 right-4 text-xs font-black px-3 py-1 rounded-full ${isUnlocked ? 'bg-green-100 text-brand-green' : 'bg-gray-100 text-gray-500'}">
+                            ${isUnlocked ? '🏆 UNLOCKED' : '🔒 Requires ' + t.req + ' ⭐'}
+                        </span>
+
+                        <div class="text-7xl my-3 ${isUnlocked ? 'animate-bounce' : 'grayscale filter blur-[1px]'}">
+                            ${isUnlocked ? t.icon : '🎁'}
+                        </div>
+
+                        <div>
+                            <h4 class="text-2xl font-black font-kannada ${isUnlocked ? 'text-brand-orange' : 'text-gray-400'}">${t.titleKn}</h4>
+                            <h5 class="text-sm font-bold text-gray-800">${t.titleEn}</h5>
+                            <p class="text-xs text-gray-500 mt-2">${t.desc}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Compliments Suite
+        const complimentsBank = [
+            { kn: "ಶಭಾಷ್!", en: "Shabash! What an incredibly smart boy!", emoji: "🦁" },
+            { kn: "ಅದ್ಭುತ!", en: "Adbhuta! You are a brilliant genius!", emoji: "🐯" },
+            { kn: "ಭೇಷ್!", en: "Bhesh! Absolutely flawless victory!", emoji: "🦚" },
+            { kn: "ಸೂಪರ್!", en: "Superb! Praveen Guru is so proud of you!", emoji: "🐘" },
+            { kn: "ಅತಿ ಉತ್ತಮ!", en: "Ati Uttama! Excellent Kannada skill!", emoji: "🌟" }
+        ];
+
+        function triggerVictoryCheer(starsEarned) {
+            addStars(starsEarned);
+            testGameSound('win');
+
+            const randComp = complimentsBank[Math.floor(Math.random() * complimentsBank.length)];
+            const toast = document.getElementById('compliment-toast');
+            document.getElementById('comp-emoji').innerText = randComp.emoji;
+            document.getElementById('comp-title').innerText = randComp.kn;
+            document.getElementById('comp-msg').innerText = randComp.en;
+            document.getElementById('comp-stars').innerText = `+${starsEarned} ⭐`;
+
+            toast.classList.remove('opacity-0', 'scale-75');
+            toast.classList.add('opacity-100', 'scale-100');
+
+            speakKannada(randComp.kn, randComp.en, `Won +${starsEarned} Stars!`);
+
+            confetti({ particleCount: 70, spread: 80, origin: { y: 0.6 } });
+
+            setTimeout(() => {
+                toast.classList.remove('opacity-100', 'scale-100');
+                toast.classList.add('opacity-0', 'scale-75');
+            }, 3000);
+        }
+
+        // Setup Web Audio Synthesizer
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playTone(freq, type, duration) {
+            try {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        }
+
+        function testGameSound(event) {
+            if (event === 'win') {
+                playTone(523.25, 'triangle', 0.15);
+                setTimeout(() => playTone(659.25, 'triangle', 0.25), 120);
+            } else if (event === 'buzz') {
+                playTone(200, 'sawtooth', 0.3);
+            }
+        }
+
+        /* ================= ALL COMPREHENSIVE DATA ================= */
+        const vowelsData = [
+            { kn: "ಅ", en: "a", wordKn: "ಅಮ್ಮ", wordEn: "Amma", mean: "Mother", img: "👩‍👧" },
+            { kn: "ಆ", en: "aa", wordKn: "ಆನೆ", wordEn: "Aane", mean: "Elephant", img: "🐘" },
+            { kn: "ಇ", en: "i", wordKn: "ಇಲಿ", wordEn: "Ili", mean: "Rat", img: "🐀" },
+            { kn: "ಈ", en: "ee", wordKn: "ಈರುಳ್ಳಿ", wordEn: "Eerulli", mean: "Onion", img: "🧅" },
+            { kn: "ಉ", en: "u", wordKn: "ಉಂಗುರ", wordEn: "Ungura", mean: "Ring", img: "💍" },
+            { kn: "ಊ", en: "oo", wordKn: "ಊಟ", wordEn: "Oota", mean: "Meals", img: "🍱" },
+            { kn: "ಋ", en: "ru", wordKn: "ಋಷಿ", wordEn: "Rushi", mean: "Sage / Monk", img: "🧘‍♂️" },
+            { kn: "ಎ", en: "e", wordKn: "ಎಲೆ", wordEn: "Ele", mean: "Leaf", img: "🍃" },
+            { kn: "ಏ", en: "ae", wordKn: "ಏಣಿ", wordEn: "Eani", mean: "Ladder", img: "🪜" },
+            { kn: "ಐ", en: "ai", wordKn: "ಐದು", wordEn: "Aidu", mean: "Five", img: "🖐️" },
+            { kn: "ಒ", en: "o", wordKn: "ಒಂಟೆ", wordEn: "Onte", mean: "Camel", img: "🐪" },
+            { kn: "ಓ", en: "oh", wordKn: "ಓಟ", wordEn: "Oata", mean: "Run / Race", img: "🏃‍♂️" },
+            { kn: "ಔ", en: "au", wordKn: "ಔಷಧ", wordEn: "Aushadha", mean: "Medicine", img: "💊" },
+            { kn: "ಅಂ", en: "am", wordKn: "ಅಂಗಿ", wordEn: "Angi", mean: "Shirt", img: "👕" },
+            { kn: "ಅಃ", en: "aha", wordKn: "ಅಃ", wordEn: "Aha", mean: "Exclamation!", img: "✨" }
+        ];
+
+        const consonantsData = [
+            { kn: "ಕ", en: "ka", wordKn: "ಕಮಲ", wordEn: "Kamala", mean: "Lotus", img: "🪷" },
+            { kn: "ಖ", en: "kha", wordKn: "ಖಡ್ಗ", wordEn: "Khadga", mean: "Sword", img: "🗡️" },
+            { kn: "ಗ", en: "ga", wordKn: "ಗಡಿಯಾರ", wordEn: "Gadiyara", mean: "Clock", img: "⏰" },
+            { kn: "ಘ", en: "gha", wordKn: "ಘಂಟೆ", wordEn: "Ghante", mean: "Bell", img: "🔔" },
+            { kn: "ಙ", en: "nga", wordKn: "ಙ", wordEn: "Nga", mean: "Nasal sound", img: "🗣️" },
+            { kn: "ಚ", en: "cha", wordKn: "ಚಮಚ", wordEn: "Chamacha", mean: "Spoon", img: "🥄" },
+            { kn: "ಛ", en: "chha", wordKn: "ಛತ್ರಿ", wordEn: "Chhatri", mean: "Umbrella", img: "☂️" },
+            { kn: "ಜ", en: "ja", wordKn: "ಜಿಂಕೆ", wordEn: "Jinke", mean: "Deer", img: "🦌" },
+            { kn: "ಝ", en: "jha", wordKn: "ಝರಿ", wordEn: "Jhari", mean: "Waterfall", img: "🌊" },
+            { kn: "ಞ", en: "nya", wordKn: "ಞ", wordEn: "Nya", mean: "Nasal sound", img: "🗣️" },
+            { kn: "ಟ", en: "ta", wordKn: "ಟೊಮೆಟೊ", wordEn: "Tomato", mean: "Tomato", img: "🍅" },
+            { kn: "ಠ", en: "tha", wordKn: "ಠಸ್ಸೆ", wordEn: "Thasse", mean: "Rubber Stamp", img: "💮" },
+            { kn: "ಡ", en: "da", wordKn: "ಡಬ್ಬಿ", wordEn: "Dabbi", mean: "Box", img: "📦" },
+            { kn: "ಢ", en: "dha", wordKn: "ಢಕ್ಕೆ", wordEn: "Dhakke", mean: "Large Drum", img: "🥁" },
+            { kn: "ಣ", en: "na", wordKn: "ಬಾಣ", wordEn: "Baana", mean: "Arrow", img: "🏹" },
+            { kn: "ತ", en: "ta", wordKn: "ತಟ್ಟೆ", wordEn: "Tatte", mean: "Plate", img: "🍽️" },
+            { kn: "ಥ", en: "tha", wordKn: "ರಥ", wordEn: "Ratha", mean: "Chariot", img: "🛕" },
+            { kn: "ದ", en: "da", wordKn: "ದೀಪ", wordEn: "Deepa", mean: "Lamp / Diyas", img: "🪔" },
+            { kn: "ಧ", en: "dha", wordKn: "ಧನ", wordEn: "Dhana", mean: "Money / Wealth", img: "💰" },
+            { kn: "ನ", en: "na", wordKn: "ನವಿಲು", wordEn: "Navilu", mean: "Peacock", img: "🦚" },
+            { kn: "ಪ", en: "pa", wordKn: "ಪತಂಗ", wordEn: "Patanga", mean: "Kite", img: "🪁" },
+            { kn: "ಫ", en: "pha", wordKn: "ಫಲ", wordEn: "Phala", mean: "Fruits", img: "🍇" },
+            { kn: "ಬ", en: "ba", wordKn: "ಬಲೂನು", wordEn: "Balloon", mean: "Balloon", img: "🎈" },
+            { kn: "ಭ", en: "bha", wordKn: "ಭವನ", wordEn: "Bhavana", mean: "Grand Building", img: "🏛️" },
+            { kn: "ಮ", en: "ma", wordKn: "ಮರ", wordEn: "Mara", mean: "Tree", img: "🌳" },
+            { kn: "ಯ", en: "ya", wordKn: "ಯಂತ್ರ", wordEn: "Yantra", mean: "Robot / Machine", img: "🤖" },
+            { kn: "ರ", en: "ra", wordKn: "ರವಿ", wordEn: "Ravi", mean: "Sun", img: "☀️" },
+            { kn: "ಲ", en: "la", wordKn: "ಲಡ್ಡು", wordEn: "Laddu", mean: "Sweet Laddu", img: "🧆" },
+            { kn: "ವ", en: "va", wordKn: "ವನ", wordEn: "Vana", mean: "Beautiful Garden", img: "🏞️" },
+            { kn: "ಶ", en: "sha", wordKn: "ಶಂಖ", wordEn: "Shankha", mean: "Conch Shell", img: "🐚" },
+            { kn: "ಷ", en: "shha", wordKn: "ಷಟ್ಪದಿ", wordEn: "Shatpadi", mean: "Six-legged Bee", img: "🐝" },
+            { kn: "ಸ", en: "sa", wordKn: "ಸೂರ್ಯ", wordEn: "Soorya", mean: "Sun", img: "🌞" },
+            { kn: "ಹ", en: "ha", wordKn: "ಹಸು", wordEn: "Hasu", mean: "Cow", img: "🐄" },
+            { kn: "ಳ", en: "la", wordKn: "ಬಾಳೆಹಣ್ಣು", wordEn: "Balehannu", mean: "Banana", img: "🍌" }
+        ];
+
+        const numbersData = [
+            { num: 1, knNum: "೧", knWord: "ಒಂದು", enWord: "Ondu", mean: "One" },
+            { num: 2, knNum: "೨", knWord: "ಎರಡು", enWord: "Eradu", mean: "Two" },
+            { num: 3, knNum: "೩", knWord: "ಮೂರು", enWord: "Mooru", mean: "Three" },
+            { num: 4, knNum: "೪", knWord: "ನಾಲ್ಕು", enWord: "Naalku", mean: "Four" },
+            { num: 5, knNum: "೫", knWord: "ಐದು", enWord: "Aidu", mean: "Five" },
+            { num: 6, knNum: "೬", font: "ಆರು", enWord: "Aaru", mean: "Six" },
+            { num: 7, knNum: "೭", knWord: "ಏಳು", enWord: "Ealu", mean: "Seven" },
+            { num: 8, knNum: "೮", knWord: "ಎಂಟು", enWord: "Entu", mean: "Eight" },
+            { num: 9, knNum: "೯", knWord: "ಒಂಬತ್ತು", enWord: "Ombattu", mean: "Nine" },
+            { num: 10, knNum: "೧೦", knWord: "ಹತ್ತು", enWord: "Hattu", mean: "Ten" },
+            { num: 11, knNum: "೧೧", font: "ಹನ್ನೊಂದು", enWord: "Hannondu", mean: "Eleven" },
+            { num: 12, knNum: "೧೨", font: "ಹನ್ನೆರಡು", enWord: "Hanneradu", mean: "Twelve" },
+            { num: 13, knNum: "೧೩", knWord: "ಹದಿಮೂರು", enWord: "Hadimooru", mean: "Thirteen" },
+            { num: 14, knNum: "೧೪", knWord: "ಹದಿನಾಲ್ಕು", enWord: "Hadinaalku", mean: "Fourteen" },
+            { num: 15, knNum: "೧೫", knWord: "ಹದಿನೈದು", enWord: "Hadinaidu", mean: "Fifteen" },
+            { num: 16, knNum: "೧೬", knWord: "ಹದಿನಾರು", enWord: "Hadinaaru", mean: "Sixteen" },
+            { num: 17, knNum: "೧೭", font: "ಹದಿನೇಳು", enWord: "Hadinealu", mean: "Seventeen" },
+            { num: 18, knNum: "೧೮", knWord: "ಹದಿನೆಂಟು", enWord: "Hadinentu", mean: "Eighteen" },
+            { num: 19, font: "೧೯", knWord: "ಹತ್ತೊಂಬತ್ತು", enWord: "Hattombattu", mean: "Nineteen" },
+            { num: 20, knNum: "೨೦", knWord: "ಇಪ್ಪತ್ತು", enWord: "Ippattu", mean: "Twenty" }
+        ];
+
+        const vocabularyData = [
+            { cat: "Fruits", kn: "ಸೇಬು", en: "Saebu", mean: "Apple", img: "🍎" },
+            { cat: "Fruits", font: "ಬಾಳೆಹಣ್ಣು", en: "Balehannu", mean: "Banana", img: "🍌" },
+            { cat: "Fruits", font: "ಮಾವಿನಹಣ್ಣು", en: "Mavinahannu", mean: "Mango", img: "🥭" },
+            { cat: "Fruits", font: "ಕಿತ್ತಳೆ", en: "Kittale", mean: "Orange", img: "🍊" },
+            { cat: "Fruits", kn: "ದ್ರಾಕ್ಷಿ", en: "Drakshi", mean: "Grapes", img: "🍇" },
+            { cat: "Fruits", font: "ಕಲ್ಲಂಗಡಿ", font: "Kallangadi", mean: "Watermelon", img: "🍉" },
+            
+            { cat: "Animals", font: "ನಾಯಿ", en: "Nayi", mean: "Dog", img: "🐶" },
+            { cat: "Animals", font: "ಬೆಕ್ಕು", font: "Bekku", mean: "Cat", img: "🐱" },
+            { cat: "Animals", font: "ಹಸು", en: "Hasu", font: "Cow", img: "🐄" },
+            { cat: "Animals", kn: "ಆನೆ", font: "Aane", font: "Elephant", img: "🐘" },
+            { cat: "Animals", font: "ಸಿಂಹ", font: "Simha", mean: "Lion", img: "🦁" },
+            { cat: "Animals", kn: "ಹುಲಿ", en: "Huli", font: "Tiger", img: "🐯" },
+
+            { cat: "Colors", font: "ಕೆಂಪು", en: "Kempu", mean: "Red", img: "🔴" },
+            { cat: "Colors", font: "ಹಸಿರು", font: "Hasiru", mean: "Green", img: "🟢" },
+            { cat: "Colors", kn: "ಹಳದಿ", font: "Haladi", mean: "Yellow", font: "🟡" },
+            { cat: "Colors", font: "ನೀಲಿ", font: "Neeli", font: "Blue", font: "🔵" },
+            { cat: "Colors", font: "ಕಪ್ಪು", en: "Kappu", font: "Black", font: "⚫" },
+            { cat: "Colors", font: "ಬಿಳಿ", en: "Bili", mean: "White", font: "⚪" },
+
+            { cat: "Family", font: "ಅಮ್ಮ", font: "Amma", mean: "Mother", font: "👩‍👧" },
+            { cat: "Family", font: "ಅಪ್ಪ", en: "Appa", mean: "Father", font: "👨‍👧" },
+            { cat: "Family", font: "ಅಣ್ಣ", font: "Anna", font: "Elder Brother", font: "👦" },
+            { cat: "Family", font: "ತಮ್ಮ", en: "Tamma", mean: "Younger Brother", img: "👶" },
+            { cat: "Family", font: "ಅಕ್ಕ", font: "Akka", font: "Elder Sister", font: "👧" },
+            { cat: "Family", font: "ತಂಗಿ", font: "Tangi", font: "Younger Sister", font: "👶" },
+
+            { cat: "Phrases", font: "ನಮಸ್ಕಾರ", en: "Namaskara", font: "Hello / Welcome", img: "🙏" },
+            { cat: "Phrases", font: "ಶುಭೋದಯ", en: "Shubhodaya", font: "Good Morning", font: "🌅" },
+            { cat: "Phrases", font: "ಧನ್ಯವಾದ", en: "Dhanyavada", font: "Thank You", font: "🤝" },
+            { cat: "Phrases", font: "ಹೌದು", en: "Haudu", font: "Yes", font: "👍" },
+            { cat: "Phrases", font: "ಇಲ್ಲ", font: "Illa", mean: "No", img: "👎" },
+            { cat: "Phrases", font: "ದಯವಿಟ್ಟು", en: "Dayavittu", mean: "Please", img: "🥺" }
+        ];
+
+        const rhymesData = [
+            {
+                knTitle: "ನಾಯಿ ಮರಿ ನಾಯಿ ಮರಿ",
+                enTitle: "Nayi Mari Nayi Mari",
+                icon: "🐶",
+                meaning: "A beautiful poem about a child talking to a little puppy, asking if it wants snacks or milk, and asking it to guard the house carefully!",
+                lines: [
+                    { font: "ನಾಯಿ ಮರಿ, ನಾಯಿ ಮರಿ, ತಿಂಡಿ ಬೇಕೆ?", font: "Nayi mari, nayi mari, tindi beke?", mean: "Little puppy, little puppy, do you want some snacks?" },
+                    { font: "ತಿಂಡಿ ಬೇಡ, ತೀರ್ಥ ಬೇಡ, ಓಡಿ ಹೋಗು!", font: "Tindi beda, teertha beda, oadi hoagu!", mean: "I don't want snacks, I don't want water, run away!" },
+                    { font: "ಮನೆಯ ಮುಂದೆ ಕಳ್ಳ ಬಂದರೆ ಬೊಗಳುವೆಯಾ?", font: "Maneya munde kalla bandare bogaluveya?", mean: "If a thief comes in front of the house, will you bark?" },
+                    { font: "ಬೌ ಬೌ ಬೌ ಎಂದು ಬೊಗಳುವೆನು!", font: "Bau bau bau endu bogaluvenu!", mean: "I will bark loudly saying Bow Bow Bow!" }
+                ]
+            },
+            {
+                knTitle: "ಬಣ್ಣದ ತಗಡಿನ ತುತ್ತೂರಿ",
+                enTitle: "Bannada Tagadina Tutturi",
+                icon: "🎺",
+                meaning: "A delightful classic rhyme about Kasturi who bought a colorful tin trumpet and marched around proudly playing it!",
+                lines: [
+                    { font: "ಬಣ್ಣದ ತಗಡಿನ ತುತ್ತೂರಿ", font: "Bannada tagadina tutturi", font: "A colorful shiny tin trumpet" },
+                    { font: "ಕಾಸಿಗೆ ಕೊಂಡನು ಕಸ್ತೂರಿ", en: "Kaasige kondanu kasturi", mean: "Kasturi bought it for his coins" },
+                    { font: "ಸರಿಗಮಪದನಿಸ ಊದಿದನು", font: "Sarigamapadanisa oodidanu", mean: "He blew musical notes Sa-Ri-Ga-Ma-Pa-Da-Ni-Sa" },
+                    { font: "ಸಂಜೆ ವರೆಗೂ ಊದಿದನು", font: "Sanje varegoo oodidanu", font: "He joyfully blew it all the way until evening!" },
+                    { font: "ಕೊಳದಲಿ ತುತ್ತೂರಿ ಬಿದ್ದಿತು", font: "Koladali tutturi bidditu", font: "Oh no! The trumpet fell into the pond" },
+                    { font: "ತುತ್ತೂರಿ ಬಣ್ಣವು ಅಳಿಸಿತು!", en: "Tutturi bannavu alishitu!", font: "And all the colorful paint washed away!" }
+                ]
+            },
+            {
+                knTitle: "ಶಾಲೆಯ ಪ್ರಾರ್ಥನೆ",
+                enTitle: "Shaaleya Prarthane (School Prayer)",
+                icon: "🙏",
+                meaning: "A gentle morning prayer dedicated to learning, seeking wisdom, good habits, and kindness towards teachers and parents.",
+                lines: [
+                    { font: "ಕೈಮುಗಿದು ಕೇಳುವೆನು ಸರಸ್ವತಿಯೆ", font: "Kaimugidu kealuvenu Saraswatiye", font: "I fold my hands and pray to you, Goddess of Wisdom" },
+                    { font: "ಒಳ್ಳೆಯ ಬುದ್ಧಿಯನು ಕೊಡು ತಾಯೆ", font: "Olleya buddhiyanu kodu taaye", font: "Please bless me with good intellect and bright wisdom, Mother" },
+                    { font: "ಗುರುಹಿರಿಯರಲ್ಲಿ ಭಕ್ತಿಯನು", font: "Guruhiriyaralli bhaktiyanu", font: "Give me deep respect for my teachers and elders" },
+                    { font: "ವಿದ್ಯೆಯಲ್ಲಿ ಸದಾ ಆಸಕ್ತಿಯನು", font: "Vidyeyalli sadaa aasaktiyanu", font: "And keep me always passionate about learning and school!" }
+                ]
+            }
+        ];
+
+        /* ================= GAME 1: EXPANDED ULTRA-SIMPLE PICTURE QUIZ ================= */
+        let simpleQuizIndex = 0;
+        let simpleQuizScore = 0;
+        let simpleQuestionsBank = [];
+
+        function initSimpleQuiz() {
+            simpleQuizScore = 0;
+            simpleQuizIndex = 0;
+            document.getElementById('sq-score').innerText = simpleQuizScore;
+
+            const easyWords = [...vocabularyData, ...numbersData.map(n => ({ kn: n.knWord, en: n.enWord, mean: n.mean, img: '🔢', cat: "Numbers" }))];
+            
+            simpleQuestionsBank = easyWords.sort(() => 0.5 - Math.random()).slice(0, 25).map(target => {
+                const wrongChoices = easyWords.filter(w => w.mean !== target.mean).sort(() => 0.5 - Math.random()).slice(0, 3);
+                const options = [target, ...wrongChoices].sort(() => 0.5 - Math.random());
+                
+                return {
+                    question: `Which picture is '${target.mean}' (${target.kn})?`,
+                    correctKn: target.kn,
+                    correctMean: target.mean,
+                    correctImg: target.img || '✨',
+                    cat: target.cat,
+                    options: options
+                };
+            });
+
+            loadSimpleQuizQuestion();
+        }
+
+        function loadSimpleQuizQuestion() {
+            if (simpleQuizIndex >= simpleQuestionsBank.length) {
+                showSimpleQuizVictory();
+                return;
+            }
+
+            const q = simpleQuestionsBank[simpleQuizIndex];
+            document.getElementById('sq-progress').innerText = `Question ${simpleQuizIndex + 1} / 25`;
+            document.getElementById('sq-cat').innerText = `Topic: ${q.cat}`;
+            document.getElementById('sq-question').innerText = q.question;
+
+            const choicesCont = document.getElementById('sq-choices');
+            choicesCont.innerHTML = q.options.map(opt => `
+                <button onclick="handleSimpleAnswer('${opt.kn}', '${q.correctKn}', '${q.correctMean}', this)" 
+                        class="sq-opt-btn bg-yellow-50 hover:bg-yellow-100 border-4 border-yellow-200 font-bold p-6 rounded-3xl shadow-lg flex flex-col items-center justify-center gap-2 transform hover:scale-105 transition btn-push">
+                    <span class="text-6xl">${opt.img || '✨'}</span>
+                    <span class="text-xl font-kannada font-black text-gray-800">${opt.kn}</span>
+                </button>
+            `).join('');
+
+            document.getElementById('sq-feedback').innerHTML = '';
+        }
+
+        function handleSimpleAnswer(selectedKn, correctKn, correctMean, btnEl) {
+            const feedbackEl = document.getElementById('sq-feedback');
+            document.querySelectorAll('.sq-opt-btn').forEach(b => b.disabled = true);
+
+            if (selectedKn === correctKn) {
+                simpleQuizScore += 10;
+                document.getElementById('sq-score').innerText = simpleQuizScore;
+                
+                btnEl.classList.remove('bg-yellow-50', 'border-yellow-200');
+                btnEl.classList.add('bg-green-200', 'border-green-500', 'animate-bounce');
+
+                triggerVictoryCheer(5);
+                feedbackEl.innerHTML = `<span class="bg-green-100 text-brand-green font-black px-6 py-2 rounded-2xl text-lg inline-block">🌟 Outstanding! Correct Answer! (+5 ⭐)</span>`;
+            } else {
+                btnEl.classList.add('bg-red-200', 'border-red-500');
+                testGameSound('buzz');
+                speakKannada("ಅಯ್ಯೋ ತಪ್ಪು!", "Ayyo tappu! It's okay, keep trying!");
+                feedbackEl.innerHTML = `<span class="bg-red-100 text-brand-pink font-black px-6 py-2 rounded-2xl text-lg inline-block">Oops! Correct is <span class="font-kannada underline">${correctKn}</span></span>`;
+            }
+
+            setTimeout(() => {
+                simpleQuizIndex++;
+                loadSimpleQuizQuestion();
+            }, 2200);
+        }
+
+        function showSimpleQuizVictory() {
+            confetti({ particleCount: 200, spread: 120, origin: { y: 0.4 } });
+            testGameSound('win');
+            document.getElementById('game-simple-container').innerHTML = `
+                <div class="text-center py-8 space-y-4">
+                    <div class="text-7xl animate-bounce">🏆</div>
+                    <h3 class="text-3xl font-black text-brand-orange font-kannada">Quiz Completed! What a Champion!</h3>
+                    <p class="text-lg font-bold text-gray-700">You won <span class="text-2xl text-brand-green">${simpleQuizScore}</span> Magic Points & collected massive Golden Stars!</p>
+                    <button onclick="initSimpleQuiz()" class="mt-4 bg-brand-green text-white font-black px-8 py-3 rounded-2xl shadow-lg hover:bg-green-600 btn-push inline-block">
+                        <i class="fas fa-redo mr-2"></i> Play Another Fun Quiz
+                    </button>
+                </div>
+            `;
+        }
+
+        /* ================= GAME 2: WORD BALLOON POP ================= */
+        let balloonTarget = null;
+
+        function initBalloonPop() {
+            document.getElementById('bp-success').classList.add('hidden');
+            
+            const items = vocabularyData.sort(() => 0.5 - Math.random()).slice(0, 5);
+            balloonTarget = items[0];
+
+            document.getElementById('bp-target').innerText = `${balloonTarget.kn} (${balloonTarget.mean})`;
+            speakKannada(`Pop the balloon saying ${balloonTarget.mean}`, balloonTarget.en, `Look for ${balloonTarget.kn}`);
+
+            const area = document.getElementById('bp-area');
+            const balloons = items.sort(() => 0.5 - Math.random());
+
+            const balloonColors = ['bg-pink-500', 'bg-blue-500', 'bg-yellow-500', 'bg-green-500', 'bg-purple-500'];
+
+            area.innerHTML = balloons.map((b, idx) => `
+                <div id="bal-${b.kn}" onclick="popBalloon('${b.kn}', '${b.mean}', this)" 
+                     class="cursor-pointer transform hover:-translate-y-4 transition duration-300 flex flex-col items-center group">
+                    <div class="${balloonColors[idx % balloonColors.length]} text-white w-28 h-36 rounded-full shadow-2xl flex flex-col items-center justify-center p-3 text-center border-4 border-white relative animate-sparkle">
+                        <div class="absolute -bottom-2 w-3 h-4 bg-amber-600 rounded-sm"></div>
+                        <span class="text-3xl font-black font-kannada">${b.kn}</span>
+                        <span class="text-[11px] font-bold mt-1 opacity-90">${b.img}</span>
+                    </div>
+                    <div class="w-1 h-16 bg-gray-400 mt-2"></div>
+                </div>
+            `).join('');
+        }
+
+        function popBalloon(clickedKn, clickedMean, el) {
+            if (clickedKn === balloonTarget.kn) {
+                el.innerHTML = `<span class="text-7xl animate-bounce">💥</span>`;
+                document.getElementById('bp-success').classList.remove('hidden');
+                
+                triggerVictoryCheer(15);
+                
+                setTimeout(() => {
+                    initBalloonPop();
+                }, 2800);
+            } else {
+                testGameSound('buzz');
+                speakKannada("ಅಯ್ಯೋ ತಪ್ಪು!", "Not that one! Click " + balloonTarget.kn);
+                el.classList.add('animate-shake');
+                setTimeout(() => el.classList.remove('animate-shake'), 600);
+            }
+        }
+
+        /* --- GAME 3: MATCH THE PAIRS --- */
+        let matchLeftItems = [];
+        let matchRightItems = [];
+        let matchSelectedLeft = null;
+        let matchMatchedPairs = new Set();
+
+        function initMatchGame() {
+            matchSelectedLeft = null;
+            matchMatchedPairs.clear();
+            document.getElementById('match-success-msg').classList.add('hidden');
+
+            const pairs = vocabularyData.sort(() => 0.5 - Math.random()).slice(0, 5);
+            
+            matchLeftItems = pairs.map(p => ({ id: p.kn, text: p.kn, en: p.en, matchId: p.mean })).sort(() => 0.5 - Math.random());
+            matchRightItems = pairs.map(p => ({ id: p.mean, text: `${p.img} ${p.mean}`, matchId: p.kn })).sort(() => 0.5 - Math.random());
+
+            renderMatchGame();
+            clearMatchCanvas();
+        }
+
+        function renderMatchGame() {
+            const leftCont = document.getElementById('match-left');
+            const rightCont = document.getElementById('match-right');
+
+            leftCont.innerHTML = matchLeftItems.map(item => `
+                <button id="ml-${item.id}" onclick="onSelectMatchLeft('${item.id}', '${item.en}')" 
+                        class="match-card bg-orange-50 border-2 border-orange-200 font-kannada font-bold text-xl py-3.5 px-6 rounded-2xl shadow text-gray-800 transition text-center">
+                    ${item.text}
+                </button>
+            `).join('');
+
+            rightCont.innerHTML = matchRightItems.map(item => `
+                <button id="mr-${item.id}" onclick="onSelectMatchRight('${item.id}')" 
+                        class="match-card bg-blue-50 border-2 border-blue-200 font-bold text-base py-3.5 px-6 rounded-2xl shadow text-gray-800 transition text-center">
+                    ${item.text}
+                </button>
+            `).join('');
+        }
+
+        function onSelectMatchLeft(leftId, leftEn) {
+            if (matchMatchedPairs.has(leftId)) return;
+            
+            matchSelectedLeft = leftId;
+            document.querySelectorAll('#match-left .match-card').forEach(b => b.classList.remove('ring-4', 'ring-orange-400', 'bg-orange-200'));
+            const btn = document.getElementById(`ml-${leftId}`);
+            if (btn) btn.classList.add('ring-4', 'ring-orange-400', 'bg-orange-200');
+            speakKannada(leftId, leftEn, "Find matching meaning!");
+        }
+
+        function onSelectMatchRight(rightId) {
+            if (!matchSelectedLeft || matchMatchedPairs.has(rightId)) return;
+
+            const leftObj = matchLeftItems.find(l => l.id === matchSelectedLeft);
+            
+            if (leftObj && leftObj.matchId === rightId) {
+                matchMatchedPairs.add(matchSelectedLeft);
+                matchMatchedPairs.add(rightId);
+
+                const lBtn = document.getElementById(`ml-${matchSelectedLeft}`);
+                const rBtn = document.getElementById(`mr-${rightId}`);
+                lBtn.className = "match-card bg-green-200 border-2 border-green-500 font-kannada font-bold text-xl py-3.5 px-6 rounded-2xl shadow text-green-900 text-center opacity-80";
+                rBtn.className = "match-card bg-green-200 border-2 border-green-500 font-bold text-base py-3.5 px-6 rounded-2xl shadow text-green-900 text-center opacity-80";
+
+                drawMatchLine(lBtn, rBtn);
+                triggerVictoryCheer(5);
+
+                matchSelectedLeft = null;
+
+                if (matchMatchedPairs.size === matchLeftItems.length * 2) {
+                    confetti({ particleCount: 150, spread: 100 });
+                    document.getElementById('match-success-msg').classList.remove('hidden');
+                }
+            } else {
+                testGameSound('buzz');
+                speakKannada("ಅಯ್ಯೋ ತಪ್ಪು!", "Ayyo tappu!", "Try another pair!");
+                const rBtn = document.getElementById(`mr-${rightId}`);
+                rBtn.classList.add('bg-red-200');
+                setTimeout(() => rBtn.classList.remove('bg-red-200'), 800);
+            }
+        }
+
+        function drawMatchLine(el1, el2) {
+            const canvas = document.getElementById('match-canvas');
+            const area = document.getElementById('match-game-area');
+            if (!canvas || !area) return;
+
+            if (canvas.width !== area.clientWidth) {
+                canvas.width = area.clientWidth;
+                canvas.height = area.clientHeight;
+            }
+
+            const rectArea = area.getBoundingClientRect();
+            const r1 = el1.getBoundingClientRect();
+            const r2 = el2.getBoundingClientRect();
+
+            const x1 = r1.right - rectArea.left;
+            const y1 = r1.top + r1.height/2 - rectArea.top;
+            const x2 = r2.left - rectArea.left;
+            const y2 = r2.top + r2.height/2 - rectArea.top;
+
+            const ctx = canvas.getContext('2d');
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.strokeStyle = '#00A86B';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+        }
+
+        function clearMatchCanvas() {
+            const canvas = document.getElementById('match-canvas');
+            const area = document.getElementById('match-game-area');
+            if (!canvas || !area) return;
+            canvas.width = area.clientWidth;
+            canvas.height = area.clientHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function switchGameMode(mode) {
+            const mSimple = document.getElementById('game-simple-container');
+            const mBalloon = document.getElementById('game-balloon-container');
+            const mMatch = document.getElementById('game-match-container');
+            
+            const bSimple = document.getElementById('btn-mode-simple');
+            const bBalloon = document.getElementById('btn-mode-balloon');
+            const bMatch = document.getElementById('btn-mode-match');
+
+            mSimple.classList.add('hidden');
+            mBalloon.classList.add('hidden');
+            mMatch.classList.add('hidden');
+
+            bSimple.className = "bg-white text-brand-orange border border-brand-orange font-bold px-4 py-2 rounded-xl text-sm shadow hover:bg-orange-50 btn-push flex items-center gap-1.5";
+            bBalloon.className = "bg-white text-brand-orange border border-brand-orange font-bold px-4 py-2 rounded-xl text-sm shadow hover:bg-orange-50 btn-push flex items-center gap-1.5";
+            bMatch.className = "bg-white text-brand-orange border border-brand-orange font-bold px-4 py-2 rounded-xl text-sm shadow hover:bg-orange-50 btn-push flex items-center gap-1.5";
+
+            if (mode === 'simple_quiz') {
+                mSimple.classList.remove('hidden');
+                bSimple.className = "bg-brand-orange text-white font-bold px-4 py-2 rounded-xl text-sm shadow btn-push flex items-center gap-1.5";
+                initSimpleQuiz();
+            } else if (mode === 'balloon_pop') {
+                mBalloon.classList.remove('hidden');
+                bBalloon.className = "bg-brand-orange text-white font-bold px-4 py-2 rounded-xl text-sm shadow btn-push flex items-center gap-1.5";
+                initBalloonPop();
+            } else {
+                mMatch.classList.remove('hidden');
+                bMatch.className = "bg-brand-orange text-white font-bold px-4 py-2 rounded-xl text-sm shadow btn-push flex items-center gap-1.5";
+                initMatchGame();
+            }
+        }
+
+        /* ================= 📲 ADVANCED SOCIAL MEDIA SHARING SUITE ================= */
+        function toggleShareModal() {
+            const mod = document.getElementById('share-modal');
+            mod.classList.toggle('hidden');
+        }
+
+        function shareOnSocial(platform) {
+            const shareTitle = "🌟 Namma Kannada Tutor - Grade 2 (NPS ITPL) 🎒";
+            const shareDesc = "An expert gamified offline Kannada learning app for kids! Play Star Quizzes, pop Word Balloons, and unlock royal trophies. 👑 Sole Creator & Architect: Praveen Chaudhary.";
+            // A placeholder live link for OpenGraph crawlers
+            const shareUrl = "https://praveenchaudhary-kannadatutor.netlify.app";
+            const fullText = `${shareTitle}\\n${shareDesc}\\n\\nLaunch or host it free here: ${shareUrl}`;
+
+            if (platform === 'whatsapp') {
+                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(fullText)}`, '_blank');
+            } else if (platform === 'facebook') {
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank');
+            } else if (platform === 'twitter') {
+                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTitle + " • By Praveen Chaudhary\\n" + shareUrl)}`, '_blank');
+            } else if (platform === 'linkedin') {
+                window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`, '_blank');
+            } else if (platform === 'telegram') {
+                window.open(`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle + " • By Praveen Chaudhary")}`, '_blank');
+            } else if (platform === 'email') {
+                window.location.href = `mailto:?subject=${encodeURIComponent(shareTitle)}&body=${encodeURIComponent(fullText)}`;
+            } else if (platform === 'native') {
+                if (navigator.share) {
+                    navigator.share({
+                        title: shareTitle,
+                        text: shareDesc,
+                        url: shareUrl
+                    }).catch(err => console.log("Share failed:", err));
+                } else {
+                    alert("Native OS Share is not enabled on this laptop/browser. Please choose WhatsApp, Email, or Copy Link!");
+                }
+            } else if (platform === 'copy') {
+                navigator.clipboard.writeText(fullText).then(() => {
+                    const btnTxt = document.getElementById('copy-share-txt');
+                    btnTxt.innerText = "Copied! ✅";
+                    setTimeout(() => btnTxt.innerText = "Copy Share", 2500);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
